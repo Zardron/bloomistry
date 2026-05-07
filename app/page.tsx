@@ -492,9 +492,6 @@ export default function Home() {
           <div className="mx-auto flex h-full max-w-6xl flex-col">
             <div className="flex items-center justify-between gap-4 py-2">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#d1ad51]">
-                  {lightbox.index + 1} / {lightbox.items.length}
-                </p>
                 <p className="mt-1 font-serif text-2xl">
                   {lightbox.items[lightbox.index].title}
                 </p>
