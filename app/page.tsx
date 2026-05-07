@@ -475,9 +475,14 @@ export default function Home() {
           </p>
           <p>
             Website developed by{" "}
-            <span className="font-semibold text-[#67558a]">
+            <a
+              href="https://www.facebook.com/zardron.pesquera/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-[#67558a] underline decoration-[#d1ad51]/60 underline-offset-4 transition hover:text-[#4f416e]"
+            >
               Zardron Angelo Pesquera
-            </span>
+            </a>
           </p>
         </div>
       </footer>
