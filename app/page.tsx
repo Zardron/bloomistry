@@ -7,7 +7,7 @@ const flowerSrc = (id: number) =>
     jpegIds.has(id) ? "jpeg" : "jpg"
   }`;
 
-const collectionSections = [
+const flowerSections = [
   {
     title: "Custom",
     description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
@@ -28,26 +28,12 @@ const collectionSections = [
     description: "Statement bouquets with bigger blooms, layered wrapping, and fuller presentation.",
     ids: [1, 2, 3, 4, 47, 55, 56, 57, 58, 59],
   },
-  {
-    title: "Hair Clips",
-    description: "Colorful fuzzy wire flower and bow clips in singles, pairs, and packaged sets.",
-    ids: [13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 39, 40, 41, 42, 43, 44, 45],
-  },
-  {
-    title: "Keychains",
-    description: "Small fuzzy wire keepsakes made as keychains and hanging accessories.",
-    ids: [29, 46, 48],
-  },
 ];
 
-const allItems = collectionSections.flatMap((section) =>
-  section.ids.map((id) => ({
-    id,
-    section: section.title,
-    src: flowerSrc(id),
-    alt: `${section.title} fuzzy wire flower craft ${id}`,
-  })),
-);
+const hairPinIds = [13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 39, 40, 41, 42, 43, 44, 45];
+const keychainIds = [29, 46, 48];
+const flowerCount = flowerSections.reduce((total, section) => total + section.ids.length, 0);
+const allItemsCount = flowerCount + hairPinIds.length + keychainIds.length;
 
 const customerIds = Array.from({ length: 13 }, (_, index) => index + 1);
 
@@ -62,6 +48,36 @@ export default function Home() {
     alt: "Large sunflower bouquet with small white daisies and gold wrapping",
     title: "Large Sunflower Bouquet",
   };
+
+  const renderProductCard = (id: number, label: string) => (
+    <article
+      key={id}
+      className="group bg-white shadow-sm ring-1 ring-[#dfd2ea]"
+    >
+      <div className="bg-white p-3">
+        <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
+          <Image
+            src={flowerSrc(id)}
+            alt={`${label} fuzzy wire craft ${id}`}
+            fill
+            sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
+            className="object-cover transition duration-500 group-hover:scale-[1.035]"
+          />
+        </div>
+      </div>
+      <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
+        <div>
+          <h4 className="font-serif text-xl text-[#67558a] sm:text-2xl">
+            {label}
+          </h4>
+          <p className="mt-1 text-sm text-[#766b7d]">
+            Bloomistry #{String(id).padStart(2, "0")}
+          </p>
+        </div>
+        <span className="h-3 w-3 rounded-full bg-[#d1ad51]" />
+      </div>
+    </article>
+  );
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#fbf8ff] text-[#332b3d]">
@@ -191,9 +207,9 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-lg text-base leading-7 text-[#625a67]">
-              Browse {allItems.length} unique photos sorted by custom pieces,
-              bouquet sizes, hair clips, and keychains. Exact duplicate photos
-              are skipped.
+              Browse {allItemsCount} unique product photos separated into
+              flowers, hair pins, and keychains. Exact duplicate photos are
+              skipped.
             </p>
           </div>
 
@@ -235,8 +251,20 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="space-y-12">
-            {collectionSections.map((section) => (
+          <section className="space-y-10">
+            <div className="border-b border-[#d9c385]/50 pb-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a98739]">
+                {flowerCount} photos
+              </p>
+              <h3 className="mt-3 font-serif text-3xl text-[#67558a] sm:text-5xl">
+                Flowers
+              </h3>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-[#625a67]">
+                Custom and ready-to-gift fuzzy wire bouquets arranged by size.
+              </p>
+            </div>
+
+            {flowerSections.map((section) => (
               <section key={section.title} aria-labelledby={section.title}>
                 <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#d9c385]/40 pb-4 sm:flex-row sm:items-end">
                   <div>
@@ -256,39 +284,51 @@ export default function Home() {
                 </div>
 
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {section.ids.map((id) => (
-                    <article
-                      key={id}
-                      className="group bg-white shadow-sm ring-1 ring-[#dfd2ea]"
-                    >
-                      <div className="bg-white p-3">
-                        <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
-                          <Image
-                            src={flowerSrc(id)}
-                            alt={`${section.title} fuzzy wire flower craft ${id}`}
-                            fill
-                            sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
-                            className="object-cover transition duration-500 group-hover:scale-[1.035]"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
-                        <div>
-                          <h4 className="font-serif text-xl text-[#67558a] sm:text-2xl">
-                            {section.title} Piece
-                          </h4>
-                          <p className="mt-1 text-sm text-[#766b7d]">
-                            Bloomistry #{String(id).padStart(2, "0")}
-                          </p>
-                        </div>
-                        <span className="h-3 w-3 rounded-full bg-[#d1ad51]" />
-                      </div>
-                    </article>
-                  ))}
+                  {section.ids.map((id) => renderProductCard(id, `${section.title} Flower`))}
                 </div>
               </section>
             ))}
-          </div>
+          </section>
+
+          <section className="mt-16 border-t border-[#d9c385]/50 pt-12">
+            <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a98739]">
+                  {hairPinIds.length} photos
+                </p>
+                <h3 className="mt-3 font-serif text-3xl text-[#67558a] sm:text-5xl">
+                  Hair Pins
+                </h3>
+              </div>
+              <p className="max-w-xl text-base leading-7 text-[#625a67]">
+                Colorful fuzzy wire flower and bow hair pins in singles, pairs,
+                and packaged sets.
+              </p>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {hairPinIds.map((id) => renderProductCard(id, "Hair Pin"))}
+            </div>
+          </section>
+
+          <section className="mt-16 border-t border-[#d9c385]/50 pt-12">
+            <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a98739]">
+                  {keychainIds.length} photos
+                </p>
+                <h3 className="mt-3 font-serif text-3xl text-[#67558a] sm:text-5xl">
+                  Keychains
+                </h3>
+              </div>
+              <p className="max-w-xl text-base leading-7 text-[#625a67]">
+                Small fuzzy wire keepsakes made as keychains and hanging
+                accessories.
+              </p>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {keychainIds.map((id) => renderProductCard(id, "Keychain"))}
+            </div>
+          </section>
 
           <section className="mt-16 border-t border-[#d9c385]/50 pt-12">
             <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
