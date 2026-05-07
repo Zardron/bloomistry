@@ -123,11 +123,21 @@ export default function Home() {
 
   useEffect(() => {
     if (!lightbox) {
-      document.body.style.overflow = "";
       return;
     }
 
+    const scrollY = window.scrollY;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousBodyPosition = document.body.style.position;
+    const previousBodyTop = document.body.style.top;
+    const previousBodyWidth = document.body.style.width;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -146,7 +156,12 @@ export default function Home() {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+      document.body.style.position = previousBodyPosition;
+      document.body.style.top = previousBodyTop;
+      document.body.style.width = previousBodyWidth;
+      window.scrollTo(0, scrollY);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [lightbox, moveLightbox]);
@@ -496,10 +511,11 @@ export default function Home() {
 
       {lightbox && currentLightboxItem ? (
         <div
-          className="fixed inset-0 z-50 bg-[#120d18]/96 px-4 py-4 text-white backdrop-blur-md sm:px-6"
+          className="fixed inset-0 z-50 h-[100dvh] touch-none overflow-hidden overscroll-none bg-[#120d18]/96 px-4 py-4 text-white backdrop-blur-md sm:px-6"
           role="dialog"
           aria-modal="true"
           aria-label="Fullscreen gallery viewer"
+          onTouchMove={(event) => event.preventDefault()}
         >
           <div className="mx-auto flex h-full max-w-6xl flex-col gap-3">
             <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-white/10 bg-white/8 px-4 py-3 shadow-2xl shadow-black/20 sm:px-5">
@@ -524,7 +540,7 @@ export default function Home() {
             </div>
 
             <div
-              className="relative min-h-0 flex-1 touch-pan-y overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/20"
+              className="relative min-h-0 flex-1 touch-none overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/20"
               onTouchStart={(event) =>
                 setTouchStartX(event.changedTouches[0].clientX)
               }
