@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 
 const jpegIds = new Set([1, 2, 3, 4, 47, 55, 56, 57, 58, 59]);
@@ -35,6 +38,25 @@ const keychainIds = [29, 46, 48];
 const flowerCount = flowerSections.reduce((total, section) => total + section.ids.length, 0);
 const allItemsCount = flowerCount + hairPinIds.length + keychainIds.length;
 
+const productTabs = [
+  ...flowerSections.map((section) => ({
+    ...section,
+    label: `${section.title} Flower`,
+  })),
+  {
+    title: "Hair Clips",
+    description: "Colorful fuzzy wire flower and bow hair clips in singles, pairs, and packaged sets.",
+    ids: hairPinIds,
+    label: "Hair Clip",
+  },
+  {
+    title: "Keychains",
+    description: "Small fuzzy wire keepsakes made as keychains and hanging accessories.",
+    ids: keychainIds,
+    label: "Keychain",
+  },
+];
+
 const customerIds = Array.from({ length: 13 }, (_, index) => index + 1);
 
 const customerSrc = (id: number) =>
@@ -43,6 +65,10 @@ const customerSrc = (id: number) =>
   }`;
 
 export default function Home() {
+  const [activeTabTitle, setActiveTabTitle] = useState(productTabs[0].title);
+  const activeTab =
+    productTabs.find((tab) => tab.title === activeTabTitle) ?? productTabs[0];
+
   const featured = {
     src: flowerSrc(4),
     alt: "Large sunflower bouquet with small white daisies and gold wrapping",
@@ -207,9 +233,9 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-lg text-base leading-7 text-[#625a67]">
-              Browse {allItemsCount} unique product photos separated into
-              flowers, hair pins, and keychains. Exact duplicate photos are
-              skipped.
+              Browse {allItemsCount} unique product photos by tab: custom,
+              small, medium, large, hair clips, and keychains. Exact duplicate
+              photos are skipped.
             </p>
           </div>
 
@@ -251,82 +277,57 @@ export default function Home() {
             </div>
           </div>
 
-          <section className="space-y-10">
-            <div className="border-b border-[#d9c385]/50 pb-5">
+          <section>
+            <div className="mb-7 border-b border-[#d9c385]/50 pb-5">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a98739]">
-                {flowerCount} photos
+                Product gallery
               </p>
               <h3 className="mt-3 font-serif text-3xl text-[#67558a] sm:text-5xl">
-                Flowers
+                Choose a category
               </h3>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-[#625a67]">
-                Custom and ready-to-gift fuzzy wire bouquets arranged by size.
-              </p>
-            </div>
+              <div
+                role="tablist"
+                aria-label="Product categories"
+                className="mt-6 flex gap-3 overflow-x-auto pb-2"
+              >
+                {productTabs.map((tab) => {
+                  const isActive = tab.title === activeTab.title;
 
-            {flowerSections.map((section) => (
-              <section key={section.title} aria-labelledby={section.title}>
-                <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#d9c385]/40 pb-4 sm:flex-row sm:items-end">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#a98739]">
-                      {section.ids.length} photos
-                    </p>
-                    <h3
-                      id={section.title}
-                      className="mt-2 font-serif text-3xl text-[#67558a] sm:text-4xl"
+                  return (
+                    <button
+                      key={tab.title}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => setActiveTabTitle(tab.title)}
+                      className={`shrink-0 rounded-full border px-5 py-3 text-sm font-semibold transition ${
+                        isActive
+                          ? "border-[#77669d] bg-[#77669d] text-white shadow-sm shadow-[#77669d]/25"
+                          : "border-[#d9c385]/70 bg-white text-[#6f608f] hover:bg-[#f4eefb]"
+                      }`}
                     >
-                      {section.title}
-                    </h3>
-                  </div>
-                  <p className="max-w-xl text-sm leading-6 text-[#625a67]">
-                    {section.description}
-                  </p>
-                </div>
+                      {tab.title}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
-                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {section.ids.map((id) => renderProductCard(id, `${section.title} Flower`))}
-                </div>
-              </section>
-            ))}
-          </section>
-
-          <section className="mt-16 border-t border-[#d9c385]/50 pt-12">
             <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a98739]">
-                  {hairPinIds.length} photos
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#a98739]">
+                  {activeTab.ids.length} photos
                 </p>
-                <h3 className="mt-3 font-serif text-3xl text-[#67558a] sm:text-5xl">
-                  Hair Pins
-                </h3>
+                <h4 className="mt-2 font-serif text-3xl text-[#67558a] sm:text-4xl">
+                  {activeTab.title}
+                </h4>
               </div>
-              <p className="max-w-xl text-base leading-7 text-[#625a67]">
-                Colorful fuzzy wire flower and bow hair pins in singles, pairs,
-                and packaged sets.
+              <p className="max-w-xl text-sm leading-6 text-[#625a67]">
+                {activeTab.description}
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {hairPinIds.map((id) => renderProductCard(id, "Hair Pin"))}
-            </div>
-          </section>
-
-          <section className="mt-16 border-t border-[#d9c385]/50 pt-12">
-            <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a98739]">
-                  {keychainIds.length} photos
-                </p>
-                <h3 className="mt-3 font-serif text-3xl text-[#67558a] sm:text-5xl">
-                  Keychains
-                </h3>
-              </div>
-              <p className="max-w-xl text-base leading-7 text-[#625a67]">
-                Small fuzzy wire keepsakes made as keychains and hanging
-                accessories.
-              </p>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {keychainIds.map((id) => renderProductCard(id, "Keychain"))}
+              {activeTab.ids.map((id) => renderProductCard(id, activeTab.label))}
             </div>
           </section>
 
