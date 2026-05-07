@@ -122,6 +122,17 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (
+      process.env.NODE_ENV === "production" &&
+      "serviceWorker" in navigator
+    ) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {
+        // The site works without offline image caching if registration fails.
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (!lightbox) {
       return;
     }
@@ -186,6 +197,7 @@ export default function Home() {
             alt={item.alt}
             fill
             sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
+            quality={70}
             className="object-cover transition duration-500 group-hover:scale-[1.035]"
           />
           <span className="absolute bottom-3 right-3 rounded-full bg-white/90 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#67558a] opacity-95 shadow-sm">
@@ -313,6 +325,7 @@ export default function Home() {
                   height={2048}
                   priority
                   sizes="(min-width: 1024px) 46vw, 92vw"
+                  quality={80}
                   className="aspect-[4/5] w-full rounded-t-[38vw] bg-white object-cover sm:rounded-t-full"
                 />
               </div>
@@ -563,6 +576,7 @@ export default function Home() {
                 alt={currentLightboxItem.alt}
                 fill
                 sizes="100vw"
+                quality={90}
                 className="p-2 object-contain sm:p-4"
                 priority
               />
