@@ -467,6 +467,21 @@ export default function Home() {
         </div>
       </section>
 
+      <footer className="border-t border-[#d9c385]/45 bg-[#f4eefb] px-5 py-8 text-center sm:px-8 lg:px-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-sm text-[#625a67] sm:flex-row sm:text-left">
+          <p>
+            Copyright © {new Date().getFullYear()} Bloomistry. All rights
+            reserved.
+          </p>
+          <p>
+            Website developed by{" "}
+            <span className="font-semibold text-[#67558a]">
+              Zardron Angelo Pesquera
+            </span>
+          </p>
+        </div>
+      </footer>
+
       {lightbox ? (
         <div
           className="fixed inset-0 z-50 bg-[#151019]/95 px-4 py-4 text-white sm:px-6"
