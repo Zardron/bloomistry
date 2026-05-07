@@ -84,9 +84,9 @@ export default function Home() {
     productTabs.find((tab) => tab.title === activeTabTitle) ?? productTabs[0];
 
   const featured = {
-    src: flowerSrc(4),
-    alt: "Large sunflower bouquet with small white daisies and gold wrapping",
-    title: "Large Sunflower Bouquet",
+    src: flowerSrc(2),
+    alt: "Featured sunflower bouquet with white daisies and cream gold wrapping",
+    title: "Featured Sunflower Bouquet",
   };
 
   const activeProductItems = activeTab.ids.map((id) => ({
