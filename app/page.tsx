@@ -91,12 +91,22 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <a
-              href="#gallery"
-              className="rounded-full border border-[#c7ad58] bg-white/70 px-5 py-3 text-sm font-semibold text-[#6f608f] shadow-sm transition hover:bg-white"
-            >
-              View Gallery
-            </a>
+            <div className="flex items-center gap-3">
+              <a
+                href="#gallery"
+                className="rounded-full border border-[#c7ad58] bg-white/70 px-5 py-3 text-sm font-semibold text-[#6f608f] shadow-sm transition hover:bg-white"
+              >
+                View Gallery
+              </a>
+              <a
+                href="https://www.facebook.com/alaine.galarroza"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-[#77669d] px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-[#77669d]/25 transition hover:bg-[#67558a]"
+              >
+                Inquire
+              </a>
+            </div>
           </header>
 
           <div className="pt-8 lg:pt-24">
@@ -110,6 +120,14 @@ export default function Home() {
               A simple showcase of Alaine&apos;s soft, sculpted flower pieces,
               shaped from fuzzy wires and wrapped with a gentle Bloomistry touch.
             </p>
+            <a
+              href="https://www.facebook.com/alaine.galarroza"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex rounded-full bg-[#d1ad51] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-white shadow-lg shadow-[#d1ad51]/25 transition hover:bg-[#b8953d]"
+            >
+              For inquiries
+            </a>
             <div className="mt-8 grid max-w-xl grid-cols-3 border-y border-[#d9c385]/55 text-center">
               <div className="py-4">
                 <p className="font-serif text-3xl text-[#77669d]">10</p>
@@ -202,6 +220,25 @@ export default function Home() {
                 </div>
               </article>
             ))}
+          </div>
+
+          <div className="mt-12 flex flex-col items-center justify-between gap-5 border-y border-[#d9c385]/50 bg-[#f4eefb] px-5 py-7 text-center sm:flex-row sm:text-left">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#a98739]">
+                Like something here?
+              </p>
+              <p className="mt-2 font-serif text-3xl text-[#67558a]">
+                Message Alaine for inquiries.
+              </p>
+            </div>
+            <a
+              href="https://www.facebook.com/alaine.galarroza"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#77669d] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-white shadow-sm shadow-[#77669d]/25 transition hover:bg-[#67558a]"
+            >
+              Open Facebook
+            </a>
           </div>
         </div>
       </section>
