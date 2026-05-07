@@ -271,7 +271,7 @@ export default function Home() {
               </div>
               <div className="px-2 py-4">
                 <p className="font-serif text-2xl text-[#77669d] sm:text-3xl">
-                  500+
+                  Varies
                 </p>
                 <p className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[#a98739] sm:text-xs sm:tracking-[0.18em]">
                   Custom
