@@ -130,21 +130,21 @@ export default function Home() {
             </a>
             <div className="mt-8 grid max-w-xl grid-cols-3 border-y border-[#d9c385]/55 text-center">
               <div className="py-4">
-                <p className="font-serif text-3xl text-[#77669d]">10</p>
+                <p className="font-serif text-3xl text-[#77669d]">50+</p>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#a98739]">
-                  Pieces
+                  Starts at
                 </p>
               </div>
               <div className="border-x border-[#d9c385]/55 py-4">
-                <p className="font-serif text-3xl text-[#77669d]">Soft</p>
+                <p className="font-serif text-3xl text-[#77669d]">500</p>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#a98739]">
-                  Texture
+                  Range up to
                 </p>
               </div>
               <div className="py-4">
-                <p className="font-serif text-3xl text-[#77669d]">Gold</p>
+                <p className="font-serif text-3xl text-[#77669d]">500+</p>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#a98739]">
-                  Accent
+                  Custom
                 </p>
               </div>
             </div>
@@ -190,6 +190,40 @@ export default function Home() {
               Each bouquet has its own mix of petals, curls, ribbons, and soft
               wrapping, photographed as a keepsake of the craft.
             </p>
+          </div>
+
+          <div className="mb-10 grid gap-5 md:grid-cols-3">
+            <div className="border border-[#d9c385]/55 bg-[#fbf8ff] p-6">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#a98739]">
+                Starting price
+              </p>
+              <p className="mt-3 font-serif text-5xl text-[#67558a]">50</p>
+              <p className="mt-3 text-sm leading-6 text-[#625a67]">
+                Simple handmade fuzzy wire flower pieces begin at 50.
+              </p>
+            </div>
+            <div className="border border-[#d9c385]/55 bg-[#f4eefb] p-6">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#a98739]">
+                Bouquet range
+              </p>
+              <p className="mt-3 font-serif text-5xl text-[#67558a]">
+                50-500
+              </p>
+              <p className="mt-3 text-sm leading-6 text-[#625a67]">
+                Final pricing depends on bouquet size, flower count, wrapping,
+                and detail.
+              </p>
+            </div>
+            <div className="border border-[#d9c385]/55 bg-[#fffdf7] p-6">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#a98739]">
+                Custom bouquet
+              </p>
+              <p className="mt-3 font-serif text-5xl text-[#67558a]">500+</p>
+              <p className="mt-3 text-sm leading-6 text-[#625a67]">
+                Photo-reference or design-following bouquets may cost 500+,
+                depending on complexity.
+              </p>
+            </div>
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
