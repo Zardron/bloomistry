@@ -1,71 +1,60 @@
 import Image from "next/image";
 
-const gallery = [
+const jpegIds = new Set([1, 2, 3, 4, 47, 55, 56, 57, 58, 59]);
+
+const flowerSrc = (id: number) =>
+  `/gallery/flowers/flower-${String(id).padStart(2, "0")}.${
+    jpegIds.has(id) ? "jpeg" : "jpg"
+  }`;
+
+const collectionSections = [
   {
-    src: "/gallery/sunflower-gold.jpeg",
-    alt: "Sunflower bouquet with small white daisies and gold wrapping",
-    title: "Golden Sunflower",
-    palette: "Sunflower, cream, moss",
-    featured: true,
+    title: "Custom",
+    description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
+    ids: [28, 30, 31, 32, 33, 35, 37, 38],
   },
   {
-    src: "/gallery/pink-tulips.jpeg",
-    alt: "Pink fuzzy wire tulip bouquet with rose accents",
-    title: "Pink Tulip Garden",
-    palette: "Petal pink, olive, soft gold",
+    title: "Small",
+    description: "Compact bouquets and mini flower arrangements for simple gifts.",
+    ids: [5, 6, 7, 8, 9, 10, 22, 52, 53],
   },
   {
-    src: "/gallery/lavender-daisies.jpeg",
-    alt: "Purple and pink daisy bouquet wrapped with a lavender ribbon",
-    title: "Lavender Daisy Wrap",
-    palette: "Lilac, blush, leafy green",
+    title: "Medium",
+    description: "Balanced handheld bouquets with fuller wrapping and flower details.",
+    ids: [11, 12, 34, 36, 49, 50, 51, 54],
   },
   {
-    src: "/gallery/pink-bouquet-chair.jpeg",
-    alt: "Bright pink bouquet displayed on a white chair",
-    title: "Blush Celebration",
-    palette: "Rose, pearl, champagne",
+    title: "Large",
+    description: "Statement bouquets with bigger blooms, layered wrapping, and fuller presentation.",
+    ids: [1, 2, 3, 4, 47, 55, 56, 57, 58, 59],
   },
   {
-    src: "/gallery/sunflower-sage-wrap.jpeg",
-    alt: "Sunflower bouquet with sage wrapping and white daisy details",
-    title: "Sage Sunflower",
-    palette: "Sage, amber, ivory",
+    title: "Hair Clips",
+    description: "Colorful fuzzy wire flower and bow clips in singles, pairs, and packaged sets.",
+    ids: [13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 39, 40, 41, 42, 43, 44, 45],
   },
   {
-    src: "/gallery/sunflower-pink-wrap.jpeg",
-    alt: "Sunflower bouquet with pink ribbon and cream wrapping",
-    title: "Ribboned Sunshine",
-    palette: "Pink, honey, deep green",
-  },
-  {
-    src: "/gallery/sunflower-lime.jpeg",
-    alt: "Large orange sunflower bouquet with lime green accents",
-    title: "Lime Glow",
-    palette: "Orange, lime, burlap",
-  },
-  {
-    src: "/gallery/sunflower-sage-table.jpeg",
-    alt: "Sunflower bouquet arranged with sage paper on a wooden table",
-    title: "Handmade Harvest",
-    palette: "Marigold, sage, wood",
-  },
-  {
-    src: "/gallery/sunflower-cream.jpeg",
-    alt: "Sunflower bouquet with cream fan wrapping and small daisies",
-    title: "Cream Fan Bouquet",
-    palette: "Cream, gold, leaf",
-  },
-  {
-    src: "/gallery/sunflower-warm.jpeg",
-    alt: "Warm sunflower bouquet with cream wrap and green curls",
-    title: "Warm Glow",
-    palette: "Tangerine, cream, fern",
+    title: "Keychains",
+    description: "Small fuzzy wire keepsakes made as keychains and hanging accessories.",
+    ids: [29, 46, 48],
   },
 ];
 
+const allItems = collectionSections.flatMap((section) =>
+  section.ids.map((id) => ({
+    id,
+    section: section.title,
+    src: flowerSrc(id),
+    alt: `${section.title} fuzzy wire flower craft ${id}`,
+  })),
+);
+
 export default function Home() {
-  const featured = gallery.find((item) => item.featured) ?? gallery[0];
+  const featured = {
+    src: flowerSrc(4),
+    alt: "Large sunflower bouquet with small white daisies and gold wrapping",
+    title: "Large Sunflower Bouquet",
+  };
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#fbf8ff] text-[#332b3d]">
@@ -195,8 +184,9 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-lg text-base leading-7 text-[#625a67]">
-              Each bouquet has its own mix of petals, curls, ribbons, and soft
-              wrapping, photographed as a keepsake of the craft.
+              Browse {allItems.length} unique photos sorted by custom pieces,
+              bouquet sizes, hair clips, and keychains. Exact duplicate photos
+              are skipped.
             </p>
           </div>
 
@@ -238,35 +228,58 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {gallery.map((item, index) => (
-              <article
-                key={item.src}
-                className={`group bg-white shadow-sm ring-1 ring-[#dfd2ea] ${
-                  index === 0 ? "sm:col-span-2 lg:col-span-1" : ""
-                }`}
-              >
-                <div className="bg-white p-3">
-                  <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.035]"
-                  />
-                  </div>
-                </div>
-                <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
+          <div className="space-y-12">
+            {collectionSections.map((section) => (
+              <section key={section.title} aria-labelledby={section.title}>
+                <div className="mb-5 flex flex-col justify-between gap-3 border-b border-[#d9c385]/40 pb-4 sm:flex-row sm:items-end">
                   <div>
-                    <h3 className="font-serif text-xl text-[#67558a] sm:text-2xl">
-                      {item.title}
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#a98739]">
+                      {section.ids.length} photos
+                    </p>
+                    <h3
+                      id={section.title}
+                      className="mt-2 font-serif text-3xl text-[#67558a] sm:text-4xl"
+                    >
+                      {section.title}
                     </h3>
-                    <p className="mt-1 text-sm text-[#766b7d]">{item.palette}</p>
                   </div>
-                  <span className="h-3 w-3 rounded-full bg-[#d1ad51]" />
+                  <p className="max-w-xl text-sm leading-6 text-[#625a67]">
+                    {section.description}
+                  </p>
                 </div>
-              </article>
+
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {section.ids.map((id) => (
+                    <article
+                      key={id}
+                      className="group bg-white shadow-sm ring-1 ring-[#dfd2ea]"
+                    >
+                      <div className="bg-white p-3">
+                        <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
+                          <Image
+                            src={flowerSrc(id)}
+                            alt={`${section.title} fuzzy wire flower craft ${id}`}
+                            fill
+                            sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
+                            className="object-cover transition duration-500 group-hover:scale-[1.035]"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
+                        <div>
+                          <h4 className="font-serif text-xl text-[#67558a] sm:text-2xl">
+                            {section.title} Piece
+                          </h4>
+                          <p className="mt-1 text-sm text-[#766b7d]">
+                            Bloomistry #{String(id).padStart(2, "0")}
+                          </p>
+                        </div>
+                        <span className="h-3 w-3 rounded-full bg-[#d1ad51]" />
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
 
