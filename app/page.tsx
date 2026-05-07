@@ -89,11 +89,11 @@ export default function Home() {
     title: "Featured Sunflower Bouquet",
   };
 
-  const activeProductItems = activeTab.ids.map((id) => ({
+  const activeProductItems = activeTab.ids.map((id, index) => ({
     src: flowerSrc(id),
-    alt: `${activeTab.label} fuzzy wire craft ${id}`,
-    title: activeTab.label,
-    subtitle: `Bloomistry #${String(id).padStart(2, "0")}`,
+    alt: `${activeTab.title} fuzzy wire craft ${index + 1}`,
+    title: `${activeTab.title} #${index + 1}`,
+    subtitle: activeTab.label,
   }));
 
   const customerItems = customerIds.map((id) => ({
