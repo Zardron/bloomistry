@@ -374,7 +374,7 @@ export default function Home() {
               <div
                 role="tablist"
                 aria-label="Product categories"
-                className="mt-6 flex gap-3 overflow-x-auto pb-2"
+                className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:flex"
               >
                 {productTabs.map((tab) => {
                   const isActive = tab.title === activeTab.title;
@@ -386,7 +386,7 @@ export default function Home() {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setActiveTabTitle(tab.title)}
-                      className={`shrink-0 rounded-full border px-5 py-3 text-sm font-semibold transition ${
+                      className={`rounded-full border px-4 py-3 text-sm font-semibold transition sm:px-5 ${
                         isActive
                           ? "border-[#77669d] bg-[#77669d] text-white shadow-sm shadow-[#77669d]/25"
                           : "border-[#d9c385]/70 bg-white text-[#6f608f] hover:bg-[#f4eefb]"
