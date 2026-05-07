@@ -49,6 +49,13 @@ const allItems = collectionSections.flatMap((section) =>
   })),
 );
 
+const customerIds = Array.from({ length: 13 }, (_, index) => index + 1);
+
+const customerSrc = (id: number) =>
+  `/gallery/customers/customer-${String(id).padStart(2, "0")}.${
+    id === 13 ? "jpeg" : "jpg"
+  }`;
+
 export default function Home() {
   const featured = {
     src: flowerSrc(4),
@@ -282,6 +289,55 @@ export default function Home() {
               </section>
             ))}
           </div>
+
+          <section className="mt-16 border-t border-[#d9c385]/50 pt-12">
+            <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a98739]">
+                  Happy moments
+                </p>
+                <h3 className="mt-3 font-serif text-3xl text-[#67558a] sm:text-5xl">
+                  Satisfied customers
+                </h3>
+              </div>
+              <p className="max-w-xl text-base leading-7 text-[#625a67]">
+                A few sweet handoff moments from customers receiving Bloomistry
+                bouquets for celebrations, graduations, and thoughtful gifts.
+              </p>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {customerIds.map((id) => (
+                <article
+                  key={id}
+                  className="group bg-white shadow-sm ring-1 ring-[#dfd2ea]"
+                >
+                  <div className="bg-white p-3">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
+                      <Image
+                        src={customerSrc(id)}
+                        alt={`Satisfied Bloomistry customer ${id}`}
+                        fill
+                        sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
+                        className="object-cover transition duration-500 group-hover:scale-[1.035]"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
+                    <div>
+                      <h4 className="font-serif text-xl text-[#67558a] sm:text-2xl">
+                        Customer Moment
+                      </h4>
+                      <p className="mt-1 text-sm text-[#766b7d]">
+                        Bloomistry smile #{String(id).padStart(2, "0")}
+                      </p>
+                    </div>
+                    <span className="h-3 w-3 rounded-full bg-[#d1ad51]" />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
 
           <div className="mt-12 flex flex-col items-center justify-between gap-5 border-y border-[#d9c385]/50 bg-[#f4eefb] px-5 py-7 text-center sm:flex-row sm:text-left">
             <div>
