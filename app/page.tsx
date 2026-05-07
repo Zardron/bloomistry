@@ -109,9 +109,10 @@ export default function Home() {
         return current;
       }
 
-      const nextIndex =
-        (current.index + direction + current.items.length) %
-        current.items.length;
+      const nextIndex = Math.min(
+        Math.max(current.index + direction, 0),
+        current.items.length - 1,
+      );
 
       return {
         ...current,
@@ -190,6 +191,12 @@ export default function Home() {
       </div>
     </article>
   );
+
+  const currentLightboxItem = lightbox?.items[lightbox.index];
+  const isFirstLightboxItem = lightbox ? lightbox.index === 0 : false;
+  const isLastLightboxItem = lightbox
+    ? lightbox.index === lightbox.items.length - 1
+    : false;
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#fbf8ff] text-[#332b3d]">
@@ -487,31 +494,37 @@ export default function Home() {
         </div>
       </footer>
 
-      {lightbox ? (
+      {lightbox && currentLightboxItem ? (
         <div
-          className="fixed inset-0 z-50 bg-[#151019]/95 px-4 py-4 text-white sm:px-6"
+          className="fixed inset-0 z-50 bg-[#120d18]/96 px-4 py-4 text-white backdrop-blur-md sm:px-6"
           role="dialog"
           aria-modal="true"
           aria-label="Fullscreen gallery viewer"
         >
-          <div className="mx-auto flex h-full max-w-6xl flex-col">
-            <div className="flex items-center justify-between gap-4 py-2">
-              <div>
-                <p className="mt-1 font-serif text-2xl">
-                  {lightbox.items[lightbox.index].title}
+          <div className="mx-auto flex h-full max-w-6xl flex-col gap-3">
+            <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-white/10 bg-white/8 px-4 py-3 shadow-2xl shadow-black/20 sm:px-5">
+              <div className="min-w-0">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#d1ad51]">
+                  Photo {lightbox.index + 1} of {lightbox.items.length}
+                </p>
+                <p className="mt-1 truncate font-serif text-2xl sm:text-3xl">
+                  {currentLightboxItem.title}
+                </p>
+                <p className="mt-1 text-sm text-white/65">
+                  {currentLightboxItem.subtitle}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setLightbox(null)}
-                className="rounded-full bg-white/12 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-white/20"
+                className="shrink-0 rounded-full bg-white/12 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-white/20"
               >
                 Close
               </button>
             </div>
 
             <div
-              className="relative min-h-0 flex-1 touch-pan-y"
+              className="relative min-h-0 flex-1 touch-pan-y overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/20"
               onTouchStart={(event) =>
                 setTouchStartX(event.changedTouches[0].clientX)
               }
@@ -530,30 +543,32 @@ export default function Home() {
               }}
             >
               <Image
-                src={lightbox.items[lightbox.index].src}
-                alt={lightbox.items[lightbox.index].alt}
+                src={currentLightboxItem.src}
+                alt={currentLightboxItem.alt}
                 fill
                 sizes="100vw"
-                className="object-contain"
+                className="p-2 object-contain sm:p-4"
                 priority
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3 py-3 sm:flex sm:items-center sm:justify-between">
+            <div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-white/10 bg-white/8 p-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
               <button
                 type="button"
+                disabled={isFirstLightboxItem}
                 onClick={() => moveLightbox(-1)}
-                className="rounded-full bg-white/12 px-5 py-4 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-white/20"
+                className="rounded-full bg-white/12 px-5 py-4 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-white/12"
               >
                 Previous
               </button>
               <p className="hidden text-center text-sm text-white/70 sm:block">
-                Swipe left or right to browse photos.
+                Swipe left or right to browse.
               </p>
               <button
                 type="button"
+                disabled={isLastLightboxItem}
                 onClick={() => moveLightbox(1)}
-                className="rounded-full bg-[#77669d] px-5 py-4 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-[#67558a]"
+                className="rounded-full bg-[#77669d] px-5 py-4 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-[#67558a] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-[#77669d]"
               >
                 Next
               </button>
