@@ -159,15 +159,17 @@ export default function Home() {
           <div className="pb-8 pt-0 lg:pt-24">
             <div className="relative mx-auto max-w-[620px]">
               <div className="absolute -left-2 top-8 h-[76%] w-[66%] border border-[#d1ad51]/60 bg-[#efe7f8] sm:-left-4 sm:top-10 sm:h-[78%] sm:w-[70%]" />
-              <Image
-                src={featured.src}
-                alt={featured.alt}
-                width={1536}
-                height={2048}
-                priority
-                sizes="(min-width: 1024px) 46vw, 92vw"
-                className="relative aspect-[4/5] w-full rounded-t-[42vw] border border-[#d1ad51]/65 bg-white object-cover shadow-2xl shadow-[#77669d]/20 sm:rounded-t-full"
-              />
+              <div className="relative rounded-t-[42vw] border border-[#d1ad51]/65 bg-white p-3 shadow-2xl shadow-[#77669d]/20 sm:rounded-t-full sm:p-4">
+                <Image
+                  src={featured.src}
+                  alt={featured.alt}
+                  width={1536}
+                  height={2048}
+                  priority
+                  sizes="(min-width: 1024px) 46vw, 92vw"
+                  className="aspect-[4/5] w-full rounded-t-[38vw] bg-white object-cover sm:rounded-t-full"
+                />
+              </div>
               <div className="relative -mt-12 ml-auto w-[90%] bg-white/90 p-4 shadow-xl shadow-[#77669d]/10 backdrop-blur sm:-mt-16 sm:w-[82%] sm:p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a98739]">
                   Featured bouquet
@@ -240,11 +242,12 @@ export default function Home() {
             {gallery.map((item, index) => (
               <article
                 key={item.src}
-                className={`group bg-[#fbf8ff] shadow-sm ring-1 ring-[#dfd2ea] ${
+                className={`group bg-white shadow-sm ring-1 ring-[#dfd2ea] ${
                   index === 0 ? "sm:col-span-2 lg:col-span-1" : ""
                 }`}
               >
-                <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[3/4]">
+                <div className="bg-white p-3">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
                   <Image
                     src={item.src}
                     alt={item.alt}
@@ -252,6 +255,7 @@ export default function Home() {
                     sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
                     className="object-cover transition duration-500 group-hover:scale-[1.035]"
                   />
+                  </div>
                 </div>
                 <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
                   <div>
