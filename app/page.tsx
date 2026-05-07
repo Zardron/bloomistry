@@ -219,10 +219,10 @@ export default function Home() {
                 Custom bouquet
               </p>
               <p className="mt-3 font-serif text-4xl text-[#67558a] sm:text-5xl">
-                500+
+                Varies
               </p>
               <p className="mt-3 text-sm leading-6 text-[#625a67]">
-                Photo-reference or design-following bouquets may cost 500+,
+                Price may vary for photo-reference or design-following bouquets,
                 depending on complexity.
               </p>
             </div>
