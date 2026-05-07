@@ -1,7 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+
+type GalleryItem = {
+  src: string;
+  alt: string;
+  title: string;
+  subtitle: string;
+};
+
+type LightboxState = {
+  items: GalleryItem[];
+  index: number;
+} | null;
 
 const jpegIds = new Set([1, 2, 3, 4, 47, 55, 56, 57, 58, 59]);
 
@@ -66,6 +78,8 @@ const customerSrc = (id: number) =>
 
 export default function Home() {
   const [activeTabTitle, setActiveTabTitle] = useState(productTabs[0].title);
+  const [lightbox, setLightbox] = useState<LightboxState>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const activeTab =
     productTabs.find((tab) => tab.title === activeTabTitle) ?? productTabs[0];
 
@@ -75,29 +89,101 @@ export default function Home() {
     title: "Large Sunflower Bouquet",
   };
 
-  const renderProductCard = (id: number, label: string) => (
+  const activeProductItems = activeTab.ids.map((id) => ({
+    src: flowerSrc(id),
+    alt: `${activeTab.label} fuzzy wire craft ${id}`,
+    title: activeTab.label,
+    subtitle: `Bloomistry #${String(id).padStart(2, "0")}`,
+  }));
+
+  const customerItems = customerIds.map((id) => ({
+    src: customerSrc(id),
+    alt: `Satisfied Bloomistry customer ${id}`,
+    title: "Customer Moment",
+    subtitle: `Bloomistry smile #${String(id).padStart(2, "0")}`,
+  }));
+
+  const moveLightbox = useCallback((direction: number) => {
+    setLightbox((current) => {
+      if (!current) {
+        return current;
+      }
+
+      const nextIndex =
+        (current.index + direction + current.items.length) %
+        current.items.length;
+
+      return {
+        ...current,
+        index: nextIndex,
+      };
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!lightbox) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setLightbox(null);
+      }
+
+      if (event.key === "ArrowLeft") {
+        moveLightbox(-1);
+      }
+
+      if (event.key === "ArrowRight") {
+        moveLightbox(1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightbox, moveLightbox]);
+
+  const renderGalleryCard = (
+    item: GalleryItem,
+    onOpen: () => void,
+  ) => (
     <article
-      key={id}
+      key={item.src}
       className="group bg-white shadow-sm ring-1 ring-[#dfd2ea]"
     >
       <div className="bg-white p-3">
-        <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
+        <button
+          type="button"
+          onClick={onOpen}
+          className="relative block aspect-[4/5] w-full overflow-hidden bg-white text-left sm:aspect-[3/4]"
+          aria-label={`View ${item.title} fullscreen`}
+        >
           <Image
-            src={flowerSrc(id)}
-            alt={`${label} fuzzy wire craft ${id}`}
+            src={item.src}
+            alt={item.alt}
             fill
             sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
             className="object-cover transition duration-500 group-hover:scale-[1.035]"
           />
-        </div>
+          <span className="absolute bottom-3 right-3 rounded-full bg-white/90 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#67558a] opacity-95 shadow-sm">
+            View
+          </span>
+        </button>
       </div>
       <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
         <div>
           <h4 className="font-serif text-xl text-[#67558a] sm:text-2xl">
-            {label}
+            {item.title}
           </h4>
           <p className="mt-1 text-sm text-[#766b7d]">
-            Bloomistry #{String(id).padStart(2, "0")}
+            {item.subtitle}
           </p>
         </div>
         <span className="h-3 w-3 rounded-full bg-[#d1ad51]" />
@@ -327,7 +413,11 @@ export default function Home() {
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {activeTab.ids.map((id) => renderProductCard(id, activeTab.label))}
+              {activeProductItems.map((item, index) =>
+                renderGalleryCard(item, () =>
+                  setLightbox({ items: activeProductItems, index }),
+                ),
+              )}
             </div>
           </section>
 
@@ -348,35 +438,11 @@ export default function Home() {
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {customerIds.map((id) => (
-                <article
-                  key={id}
-                  className="group bg-white shadow-sm ring-1 ring-[#dfd2ea]"
-                >
-                  <div className="bg-white p-3">
-                    <div className="relative aspect-[4/5] overflow-hidden bg-white sm:aspect-[3/4]">
-                      <Image
-                        src={customerSrc(id)}
-                        alt={`Satisfied Bloomistry customer ${id}`}
-                        fill
-                        sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
-                        className="object-cover transition duration-500 group-hover:scale-[1.035]"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex items-end justify-between gap-4 border-t border-[#d9c385]/45 bg-white p-4">
-                    <div>
-                      <h4 className="font-serif text-xl text-[#67558a] sm:text-2xl">
-                        Customer Moment
-                      </h4>
-                      <p className="mt-1 text-sm text-[#766b7d]">
-                        Bloomistry smile #{String(id).padStart(2, "0")}
-                      </p>
-                    </div>
-                    <span className="h-3 w-3 rounded-full bg-[#d1ad51]" />
-                  </div>
-                </article>
-              ))}
+              {customerItems.map((item, index) =>
+                renderGalleryCard(item, () =>
+                  setLightbox({ items: customerItems, index }),
+                ),
+              )}
             </div>
           </section>
 
@@ -400,6 +466,84 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {lightbox ? (
+        <div
+          className="fixed inset-0 z-50 bg-[#151019]/95 px-4 py-4 text-white sm:px-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Fullscreen gallery viewer"
+        >
+          <div className="mx-auto flex h-full max-w-6xl flex-col">
+            <div className="flex items-center justify-between gap-4 py-2">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#d1ad51]">
+                  {lightbox.index + 1} / {lightbox.items.length}
+                </p>
+                <p className="mt-1 font-serif text-2xl">
+                  {lightbox.items[lightbox.index].title}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLightbox(null)}
+                className="rounded-full bg-white/12 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-white/20"
+              >
+                Close
+              </button>
+            </div>
+
+            <div
+              className="relative min-h-0 flex-1 touch-pan-y"
+              onTouchStart={(event) =>
+                setTouchStartX(event.changedTouches[0].clientX)
+              }
+              onTouchEnd={(event) => {
+                if (touchStartX === null) {
+                  return;
+                }
+
+                const deltaX = event.changedTouches[0].clientX - touchStartX;
+
+                if (Math.abs(deltaX) > 50) {
+                  moveLightbox(deltaX < 0 ? 1 : -1);
+                }
+
+                setTouchStartX(null);
+              }}
+            >
+              <Image
+                src={lightbox.items[lightbox.index].src}
+                alt={lightbox.items[lightbox.index].alt}
+                fill
+                sizes="100vw"
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 py-3 sm:flex sm:items-center sm:justify-between">
+              <button
+                type="button"
+                onClick={() => moveLightbox(-1)}
+                className="rounded-full bg-white/12 px-5 py-4 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-white/20"
+              >
+                Previous
+              </button>
+              <p className="hidden text-center text-sm text-white/70 sm:block">
+                Swipe left or right to browse photos.
+              </p>
+              <button
+                type="button"
+                onClick={() => moveLightbox(1)}
+                className="rounded-full bg-[#77669d] px-5 py-4 text-sm font-bold uppercase tracking-[0.12em] transition hover:bg-[#67558a]"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }
