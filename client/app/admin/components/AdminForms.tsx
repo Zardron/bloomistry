@@ -85,7 +85,7 @@ export function FlowerForm({
           name="category"
           required
           defaultValue={selectedCategory ?? ""}
-          className="mt-2 w-full border border-[#dfd2ea] bg-white px-4 py-3 outline-none focus:border-[#77669d]"
+          className="mt-2 min-h-12 w-full border border-[#dfd2ea] bg-white px-4 py-3 text-base outline-none focus:border-[#77669d]"
         >
           <option value="">Select category</option>
           {categories.map((category) => (

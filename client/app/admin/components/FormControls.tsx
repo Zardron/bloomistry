@@ -14,7 +14,7 @@ export function TextInput({
       {label}
       <input
         {...props}
-        className="mt-2 w-full border border-[#dfd2ea] px-4 py-3 outline-none focus:border-[#77669d]"
+        className="mt-2 min-h-12 w-full border border-[#dfd2ea] px-4 py-3 text-base outline-none focus:border-[#77669d]"
       />
     </label>
   );
@@ -30,7 +30,7 @@ export function TextArea({
       <textarea
         {...props}
         rows={4}
-        className="mt-2 w-full resize-none border border-[#dfd2ea] px-4 py-3 outline-none focus:border-[#77669d]"
+        className="mt-2 w-full resize-none border border-[#dfd2ea] px-4 py-3 text-base outline-none focus:border-[#77669d]"
       />
     </label>
   );
@@ -49,7 +49,7 @@ export function FileInput({
         type="file"
         accept="image/*"
         required={required}
-        className="mt-2 w-full border border-[#dfd2ea] bg-white px-4 py-3 text-sm"
+        className="mt-2 min-h-12 w-full border border-[#dfd2ea] bg-white px-4 py-3 text-base"
       />
     </label>
   );
@@ -81,7 +81,7 @@ export function FormActions({
       <button
         type="submit"
         disabled={isLoading}
-        className="bg-[#d1ad51] px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-[#b8953d] disabled:opacity-60"
+        className="min-h-12 bg-[#d1ad51] px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white transition hover:bg-[#b8953d] disabled:opacity-60"
       >
         {isLoading ? "Saving" : isEditing ? "Update" : "Save"}
       </button>
@@ -89,7 +89,7 @@ export function FormActions({
         <button
           type="button"
           onClick={onCancel}
-          className="border border-[#dfd2ea] bg-white px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#67558a]"
+          className="min-h-12 border border-[#dfd2ea] bg-white px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#67558a]"
         >
           Cancel
         </button>

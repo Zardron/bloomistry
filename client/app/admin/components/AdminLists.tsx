@@ -25,9 +25,9 @@ export function ListHeader({
   onCategoryChange: (slug: string) => void;
 }) {
   return (
-    <div className="border-b border-[#d9c385]/45 px-5 py-4">
+    <div className="border-b border-[#d9c385]/45 px-4 py-4 sm:px-5">
       <div className="flex flex-col justify-between gap-4 xl:flex-row xl:items-center">
-        <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#a98739]">
+        <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#a98739] sm:text-sm sm:tracking-[0.16em]">
           {activeSection === "flowers" && activeFlowerCategory
             ? `${activeFlowerCategory.name} flowers`
             : activeSection === "featured"
@@ -38,7 +38,7 @@ export function ListHeader({
           <div
             role="tablist"
             aria-label="Flower categories"
-            className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:flex xl:flex-wrap"
+            className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:px-0 sm:pb-0 xl:flex xl:flex-wrap"
           >
             {categories.map((category) => {
               const isActive = activeFlowerCategory?.slug === category.slug;
@@ -53,7 +53,7 @@ export function ListHeader({
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => onCategoryChange(category.slug)}
-                  className={`border px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition ${
+                  className={`min-h-10 shrink-0 border px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] transition sm:tracking-[0.1em] ${
                     isActive
                       ? "border-[#77669d] bg-[#77669d] text-white"
                       : "border-[#dfd2ea] bg-white text-[#67558a] hover:bg-[#f4eefb]"

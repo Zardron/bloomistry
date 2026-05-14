@@ -21,24 +21,24 @@ export function AdminSidebar({
   onLogout: () => void;
 }) {
   return (
-    <aside className="flex flex-col border-b border-[#d9c385]/50 bg-[#fffdf7] px-5 py-5 lg:sticky lg:top-0 lg:h-screen lg:border-b-0 lg:border-r lg:px-6">
+    <aside className="flex flex-col border-b border-[#d9c385]/50 bg-[#fffdf7] px-4 py-4 lg:sticky lg:top-0 lg:h-dvh lg:border-b-0 lg:border-r lg:px-6 lg:py-5">
       <div className="flex items-center gap-3">
         <Image
           src="/logo.jpeg"
           alt="Bloomistry Alaine's Craft logo"
           width={72}
           height={72}
-          className="h-14 w-14 shrink-0 rounded-full border border-[#d1ad51] bg-white object-cover shadow-sm"
+          className="h-12 w-12 shrink-0 rounded-full border border-[#d1ad51] bg-white object-cover shadow-sm sm:h-14 sm:w-14"
         />
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a98739]">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#a98739] sm:text-xs">
             Bloomistry
           </p>
-          <h1 className="font-serif text-2xl leading-tight text-[#67558a]">Admin</h1>
+          <h1 className="font-serif text-2xl leading-tight text-[#67558a] sm:text-3xl">Admin</h1>
         </div>
       </div>
 
-      <nav className="mt-7 grid gap-2">
+      <nav className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:mt-7 lg:grid-cols-1">
         {sections.map((section) => {
           const total =
             section.key === "featured"
@@ -51,7 +51,7 @@ export function AdminSidebar({
               key={section.key}
               type="button"
               onClick={() => onSectionChange(section.key)}
-              className={`flex items-center justify-between border px-4 py-3 text-left text-sm font-bold uppercase tracking-[0.1em] transition ${
+              className={`flex min-h-12 items-center justify-between gap-3 border px-3 py-3 text-left text-xs font-bold uppercase tracking-[0.08em] transition sm:text-sm lg:px-4 ${
                 isActive
                   ? "border-[#77669d] bg-[#77669d] text-white shadow-sm shadow-[#77669d]/20"
                   : "border-[#dfd2ea] bg-white text-[#67558a] hover:bg-[#f4eefb]"
@@ -64,12 +64,12 @@ export function AdminSidebar({
         })}
       </nav>
 
-      <div className="mt-7 border-t border-[#d9c385]/50 pt-5 lg:mt-auto">
+      <div className="mt-4 border-t border-[#d9c385]/50 pt-4 lg:mt-auto lg:pt-5">
         <p className="truncate text-sm font-semibold text-[#625a67]">{userEmail}</p>
         <button
           type="button"
           onClick={onLogout}
-          className="mt-4 w-full border border-[#c7ad58] bg-white px-4 py-2 text-sm font-semibold text-[#6f608f] transition hover:bg-[#fffdf7]"
+          className="mt-3 min-h-11 w-full border border-[#c7ad58] bg-white px-4 py-2 text-sm font-semibold text-[#6f608f] transition hover:bg-[#fffdf7] lg:mt-4"
         >
           Logout
         </button>

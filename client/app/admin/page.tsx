@@ -326,7 +326,7 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fbf8ff] text-[#332b3d] lg:grid lg:grid-cols-[280px_1fr]">
+    <main className="min-h-dvh bg-[#fbf8ff] text-[#332b3d] lg:grid lg:grid-cols-[280px_minmax(0,1fr)]">
       <AdminSidebar
         sections={adminSections}
         activeSection={activeSection}
@@ -337,7 +337,7 @@ export default function AdminPage() {
         onLogout={logout}
       />
 
-      <section className="min-w-0 px-5 py-6 sm:px-8 lg:px-10">
+      <section className="min-w-0 px-4 py-5 sm:px-6 lg:px-10 lg:py-6">
         <DashboardHeader title={activeSectionLabel} stats={stats} />
 
         {message ? (
@@ -346,8 +346,8 @@ export default function AdminPage() {
           </p>
         ) : null}
 
-        <div className="mt-7 grid gap-7 xl:grid-cols-[380px_1fr]">
-          <div className="border border-[#d9c385]/55 bg-white p-5 xl:sticky xl:top-6 xl:max-h-[calc(100vh-3rem)] xl:overflow-auto">
+        <div className="mt-5 grid gap-5 lg:mt-7 xl:grid-cols-[360px_minmax(0,1fr)] 2xl:grid-cols-[380px_minmax(0,1fr)]">
+          <div className="border border-[#d9c385]/55 bg-white p-4 sm:p-5 xl:sticky xl:top-6 xl:max-h-[calc(100dvh-3rem)] xl:overflow-auto">
             {activeSection === "categories" ? (
               <CategoryForm
                 key={editingId ?? "new-category"}
