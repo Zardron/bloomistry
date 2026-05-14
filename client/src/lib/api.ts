@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api/v1";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api/v1";
 
 type RequestOptions = RequestInit & {
   token?: string | null;
@@ -32,7 +32,17 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 
 export function getApiAssetUrl(path?: string) {
   if (!path) return "";
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  if (
+    path.startsWith("http://") ||
+    path.startsWith("https://") ||
+    path.startsWith("data:")
+  ) {
+    return path;
+  }
+
+  if (API_BASE_URL.startsWith("/")) {
+    return path.startsWith("/") ? path : `/${path}`;
+  }
 
   const apiOrigin = new URL(API_BASE_URL).origin;
   return `${apiOrigin}${path.startsWith("/") ? path : `/${path}`}`;

@@ -14,6 +14,12 @@ function buildFilter(query) {
 
 function buildImage(file) {
   if (!file) return undefined;
+  if (file.buffer) {
+    return {
+      url: `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
+      filename: file.originalname,
+    };
+  }
 
   return {
     url: `/uploads/${file.filename}`,

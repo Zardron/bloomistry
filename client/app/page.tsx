@@ -4,7 +4,19 @@ import type { ApiListResponse, Category, Flower, Testimonial } from "@/src/types
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api/v1";
+function getApiBaseUrl() {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}/api/v1`;
+  }
+
+  return "http://localhost:5000/api/v1";
+}
+
+const apiBaseUrl = getApiBaseUrl();
 
 async function getCatalogResource<T>(path: string) {
   const response = await fetch(`${apiBaseUrl}${path}`, {
