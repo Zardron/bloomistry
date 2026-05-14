@@ -13,6 +13,23 @@ function buildFilter(query) {
   return filter;
 }
 
+function normalizePriceLabel(priceLabel) {
+  if (typeof priceLabel !== "string") return priceLabel;
+
+  const prices = priceLabel.match(/\d+(?:\.\d+)?/g) ?? [];
+
+  return prices.length >= 2 ? `PHP ${prices[0]} - PHP ${prices[1]}` : priceLabel.trim();
+}
+
+function normalizeCategoryPayload(payload) {
+  if (!Object.hasOwn(payload, "priceLabel")) return payload;
+
+  return {
+    ...payload,
+    priceLabel: normalizePriceLabel(payload.priceLabel),
+  };
+}
+
 export const categoryService = {
   async list(query) {
     const { page, limit, skip } = getPagination(query);
@@ -30,6 +47,7 @@ export const categoryService = {
   },
 
   async create(payload) {
+    const categoryPayload = normalizeCategoryPayload(payload);
     const lastCategory = await categoryRepository
       .find({}, "sortOrder")
       .sort({ sortOrder: -1 })
@@ -37,14 +55,14 @@ export const categoryService = {
       .then((categories) => categories[0]);
 
     return categoryRepository.create({
-      ...payload,
-      slug: payload.slug || slugify(payload.name),
+      ...categoryPayload,
+      slug: categoryPayload.slug || slugify(categoryPayload.name),
       sortOrder: lastCategory ? lastCategory.sortOrder + 10 : 10,
     });
   },
 
   async update(id, payload) {
-    const safePayload = { ...payload };
+    const safePayload = normalizeCategoryPayload({ ...payload });
     delete safePayload.sortOrder;
     const update = {
       ...safePayload,

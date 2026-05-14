@@ -6,6 +6,15 @@ import { getApiAssetUrl } from "@/src/lib/api";
 import type { Category, Flower, Testimonial } from "@/src/types/api";
 import { Checkbox, FileInput, FormActions, TextArea, TextInput } from "./FormControls";
 
+function getPriceRange(priceLabel?: string) {
+  const matches = priceLabel?.match(/\d+(?:\.\d+)?/g) ?? [];
+
+  return {
+    startPrice: matches[0] ?? "",
+    lastPrice: matches[1] ?? "",
+  };
+}
+
 export function CategoryForm({
   category,
   onCancel,
@@ -17,6 +26,8 @@ export function CategoryForm({
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
 }) {
+  const { startPrice, lastPrice } = getPriceRange(category?.priceLabel);
+
   return (
     <form onSubmit={onSubmit} className="grid gap-4">
       <h2 className="font-serif text-2xl text-[#67558a]">
@@ -24,12 +35,28 @@ export function CategoryForm({
       </h2>
       <TextInput name="name" label="Name" defaultValue={category?.name} required />
       <TextArea name="description" label="Description" defaultValue={category?.description} />
-      <TextInput
-        name="priceLabel"
-        label="Price label"
-        placeholder="PHP 120 - PHP 300"
-        defaultValue={category?.priceLabel}
-      />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <TextInput
+          name="startPrice"
+          label="Start price"
+          type="number"
+          min={0}
+          step={1}
+          placeholder="120"
+          defaultValue={startPrice}
+          required
+        />
+        <TextInput
+          name="lastPrice"
+          label="Last price"
+          type="number"
+          min={0}
+          step={1}
+          placeholder="300"
+          defaultValue={lastPrice}
+          required
+        />
+      </div>
       <Checkbox name="isActive" label="Visible on site" defaultChecked={category?.isActive ?? true} />
       <FormActions isLoading={isLoading} isEditing={Boolean(category)} onCancel={onCancel} />
     </form>

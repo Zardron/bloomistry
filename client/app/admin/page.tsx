@@ -104,6 +104,17 @@ function AdminLoadingOverlay({ label }: { label: string }) {
   );
 }
 
+function formatPriceLabel(startPrice: FormDataEntryValue | null, lastPrice: FormDataEntryValue | null) {
+  const normalize = (value: FormDataEntryValue | null) =>
+    String(value ?? "")
+      .replace(/[^\d.]/g, "")
+      .trim();
+  const start = normalize(startPrice);
+  const last = normalize(lastPrice);
+
+  return start && last ? `PHP ${start} - PHP ${last}` : "";
+}
+
 export default function AdminPage() {
   const token = useSyncExternalStore(
     subscribeToTokenChange,
@@ -280,7 +291,7 @@ export default function AdminPage() {
       JSON.stringify({
         name: form.get("name"),
         description: form.get("description"),
-        priceLabel: form.get("priceLabel"),
+        priceLabel: formatPriceLabel(form.get("startPrice"), form.get("lastPrice")),
         isActive: form.get("isActive") === "on",
       }),
       "Category saved",
