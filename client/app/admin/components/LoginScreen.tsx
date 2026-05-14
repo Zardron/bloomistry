@@ -22,7 +22,7 @@ export function LoginScreen({
     <main className="min-h-dvh bg-[#fbf8ff] px-4 py-6 text-[#332b3d] sm:px-5 sm:py-10">
       <section className="mx-auto grid min-h-[calc(100dvh-3rem)] max-w-6xl items-center gap-8 lg:min-h-[calc(100dvh-5rem)] lg:grid-cols-[1fr_440px] lg:gap-10">
         <div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center gap-3 lg:justify-start">
             <Image
               src="/logo.jpeg"
               alt="Bloomistry Alaine's Craft logo"
@@ -31,7 +31,7 @@ export function LoginScreen({
               priority
               className="h-16 w-16 shrink-0 rounded-full border border-[#d1ad51] bg-white object-cover shadow-sm"
             />
-            <div>
+            <div className="text-center lg:text-left">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#a98739]">
                 Bloomistry Admin
               </p>
