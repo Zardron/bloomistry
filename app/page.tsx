@@ -2,10 +2,26 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import featuredFlower from "./assets/flowers/vercel.jpeg";
+import smallFlower01 from "./assets/flowers/small/48126d4d-a1f1-4c1b-9ca7-27b5755e2d46.jpeg";
+import smallFlower02 from "./assets/flowers/small/5859b116-f37a-42e7-8156-c63249c64b64.jpeg";
+import smallFlower03 from "./assets/flowers/small/6ebfd240-3152-438c-aa1f-7a1fb3636ba3.jpeg";
+import smallFlower04 from "./assets/flowers/small/70f23b83-e60b-4313-9b78-bc8619f3ee1c.jpeg";
+import smallFlower05 from "./assets/flowers/small/74496c4d-f615-4972-8ef1-0d3b5bb5b7b1.jpeg";
+import smallFlower06 from "./assets/flowers/small/853764c2-15a9-4afa-b7a1-2de9afbce674.jpeg";
+import smallFlower07 from "./assets/flowers/small/94f14a12-aac5-49c6-9704-dfd804ad7b04.jpeg";
+import smallFlower08 from "./assets/flowers/small/af356849-00a1-42b4-a3f3-429f3ec31005.jpeg";
+import mediumFlower01 from "./assets/flowers/medium/4113373e-09ed-40e8-9a60-790b36e30270.jpeg";
+import mediumFlower02 from "./assets/flowers/medium/95ed1fd7-9543-4146-bb72-5edfa68c19c3.jpeg";
+import mediumFlower03 from "./assets/flowers/medium/CLAUDE.jpeg";
+import mediumFlower04 from "./assets/flowers/medium/dc09f4b9-6b70-4197-aa84-83fba89e1e62.jpeg";
+
+type ImageSource = string | StaticImageData;
 
 type GalleryItem = {
-  src: string;
+  key: string;
+  src: ImageSource;
   alt: string;
   title: string;
   subtitle: string;
@@ -23,32 +39,52 @@ const flowerSrc = (id: number) =>
     jpegIds.has(id) ? "jpeg" : "jpg"
   }`;
 
+const smallFlowerAssets = [
+  smallFlower01,
+  smallFlower02,
+  smallFlower03,
+  smallFlower04,
+  smallFlower05,
+  smallFlower06,
+  smallFlower07,
+  smallFlower08,
+];
+
+const mediumFlowerAssets = [
+  mediumFlower01,
+  mediumFlower02,
+  mediumFlower03,
+  mediumFlower04,
+];
+
+const flowerImages = (ids: number[]) => ids.map((id) => flowerSrc(id));
+
 const flowerSections = [
   {
     title: "Custom",
     description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
-    ids: [28, 30, 31, 32, 33, 35, 37, 38],
+    images: flowerImages([28, 30, 31, 32, 33, 35, 37, 38]),
   },
   {
     title: "Small",
     description: "Compact bouquets and mini flower arrangements for simple gifts.",
-    ids: [5, 6, 7, 8, 9, 10, 22, 52, 53],
+    images: [...flowerImages([6, 9]), ...smallFlowerAssets],
   },
   {
     title: "Medium",
     description: "Balanced handheld bouquets with fuller wrapping and flower details.",
-    ids: [11, 12, 34, 36, 49, 50, 51, 54],
+    images: [...flowerImages([4, 8]), ...mediumFlowerAssets],
   },
   {
     title: "Large",
     description: "Statement bouquets with bigger blooms, layered wrapping, and fuller presentation.",
-    ids: [1, 2, 3, 4, 47, 55, 56, 57, 58, 59],
+    images: flowerImages([1, 2, 3, 47, 55, 56, 57, 58, 59]),
   },
 ];
 
 const hairPinIds = [13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 39, 40, 41, 42, 43, 44, 45];
 const keychainIds = [29, 46, 48];
-const flowerCount = flowerSections.reduce((total, section) => total + section.ids.length, 0);
+const flowerCount = flowerSections.reduce((total, section) => total + section.images.length, 0);
 const allItemsCount = flowerCount + hairPinIds.length + keychainIds.length;
 
 const productTabs = [
@@ -59,13 +95,13 @@ const productTabs = [
   {
     title: "Hair Clips",
     description: "Colorful fuzzy wire flower and bow hair clips in singles, pairs, and packaged sets.",
-    ids: hairPinIds,
+    images: flowerImages(hairPinIds),
     label: "Hair Clip",
   },
   {
     title: "Keychains",
     description: "Small fuzzy wire keepsakes made as keychains and hanging accessories.",
-    ids: keychainIds,
+    images: flowerImages(keychainIds),
     label: "Keychain",
   },
 ];
@@ -90,14 +126,16 @@ export default function Home() {
     title: "Featured Sunflower Bouquet",
   };
 
-  const activeProductItems = activeTab.ids.map((id, index) => ({
-    src: flowerSrc(id),
+  const activeProductItems = activeTab.images.map((src, index) => ({
+    key: `${activeTab.title}-${index}`,
+    src,
     alt: `${activeTab.title} fuzzy wire craft ${index + 1}`,
     title: `${activeTab.title} #${index + 1}`,
     subtitle: activeTab.label,
   }));
 
   const customerItems = customerIds.map((id) => ({
+    key: `customer-${id}`,
     src: customerSrc(id),
     alt: `Satisfied Bloomistry customer ${id}`,
     title: "Customer Moment",
@@ -183,7 +221,7 @@ export default function Home() {
     onOpen: () => void,
   ) => (
     <article
-      key={item.src}
+      key={item.key}
       className="group bg-white shadow-sm ring-1 ring-[#dfd2ea]"
     >
       <div className="bg-white p-3">
@@ -438,7 +476,7 @@ export default function Home() {
             <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#a98739]">
-                  {activeTab.ids.length} photos
+                  {activeTab.images.length} photos
                 </p>
                 <h4 className="mt-2 font-serif text-3xl text-[#67558a] sm:text-4xl">
                   {activeTab.title}
