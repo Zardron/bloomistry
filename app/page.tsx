@@ -697,7 +697,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-white/10 bg-white/8 p-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+            <div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-white/10 bg-white/8 p-3 sm:items-center">
               <button
                 type="button"
                 disabled={isFirstLightboxItem}
@@ -706,9 +706,6 @@ export default function Home() {
               >
                 Previous
               </button>
-              <p className="hidden text-center text-sm text-white/70 sm:block">
-                Swipe left or right to browse.
-              </p>
               <button
                 type="button"
                 disabled={isLastLightboxItem}
