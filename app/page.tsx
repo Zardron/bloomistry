@@ -139,31 +139,37 @@ const graduationFlowerAssets = [
 const flowerSections = [
   {
     title: "Custom",
+    price: "Price may vary by design",
     description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
     images: customFlowerAssets,
   },
   {
     title: "Graduation",
+    price: "₱120 - ₱300",
     description: "Graduation-ready bouquets for ceremonies, photos, and congratulatory gifts.",
     images: graduationFlowerAssets,
   },
   {
     title: "Small",
+    price: "₱50 - ₱120",
     description: "Compact bouquets and mini flower arrangements for simple gifts.",
     images: smallFlowerAssets,
   },
   {
     title: "Medium",
+    price: "₱120 - ₱250",
     description: "Balanced handheld bouquets with fuller wrapping and flower details.",
     images: mediumFlowerAssets,
   },
   {
     title: "Large",
+    price: "₱250 - ₱450",
     description: "Statement bouquets with bigger blooms, layered wrapping, and fuller presentation.",
     images: largeFlowerAssets,
   },
   {
     title: "XL",
+    price: "₱450 - ₱700",
     description: "Extra-full bouquets made for bigger, more dramatic gifting moments.",
     images: xlFlowerAssets,
   },
@@ -549,7 +555,7 @@ export default function Home() {
                   {activeTab.images.length} photos
                 </p>
                 <h4 className="mt-2 font-serif text-3xl text-[#67558a] sm:text-4xl">
-                  {activeTab.title}
+                  {activeTab.title} - {activeTab.price}
                 </h4>
               </div>
               <p className="max-w-xl text-sm leading-6 text-[#625a67]">
