@@ -4,20 +4,21 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
 import featuredFlower from "./assets/flowers/vercel.jpeg";
-import smallFlower01 from "./assets/flowers/small/2d0cf1de-57d8-4a2a-b120-aaa71b4b7911.jpeg";
-import smallFlower02 from "./assets/flowers/small/9f70f2f1-7472-46d0-a26c-1e6a1767a44e.jpeg";
-import smallFlower03 from "./assets/flowers/small/633658773_3249230288584894_5845819109626465371_n.jpg";
-import smallFlower04 from "./assets/flowers/small/6edf65b9-35d8-4f6a-9470-dfc0319c958d.jpeg";
-import smallFlower05 from "./assets/flowers/small/635554028_3249230258584897_8078491129720463944_n.jpg";
-import smallFlower06 from "./assets/flowers/small/81210d07-ae10-433f-a16d-776244b210aa.jpeg";
-import smallFlower07 from "./assets/flowers/small/6107ea80-823c-4233-816e-8235c8254d82.jpeg";
-import smallFlower08 from "./assets/flowers/small/45b39846-3c3d-4f84-893e-5356e43a7806.jpeg";
-import smallFlower09 from "./assets/flowers/small/d295c29b-6b00-4b2f-998d-353fbbad6a0b.jpeg";
-import smallFlower10 from "./assets/flowers/small/48166219-aa68-4332-a04b-7f5450a654bd.jpeg";
-import mediumFlower01 from "./assets/flowers/medium/4113373e-09ed-40e8-9a60-790b36e30270.jpeg";
+import smallFlower01 from "./assets/flowers/small/d295c29b-6b00-4b2f-998d-353fbbad6a0b.jpeg";
+import smallFlower02 from "./assets/flowers/small/48166219-aa68-4332-a04b-7f5450a654bd.jpeg";
+import smallFlower03 from "./assets/flowers/small/6107ea80-823c-4233-816e-8235c8254d82.jpeg";
+import smallFlower04 from "./assets/flowers/small/45b39846-3c3d-4f84-893e-5356e43a7806.jpeg";
+import smallFlower05 from "./assets/flowers/small/81210d07-ae10-433f-a16d-776244b210aa.jpeg";
+import smallFlower06 from "./assets/flowers/small/6edf65b9-35d8-4f6a-9470-dfc0319c958d.jpeg";
+import smallFlower07 from "./assets/flowers/small/2d0cf1de-57d8-4a2a-b120-aaa71b4b7911.jpeg";
+import smallFlower08 from "./assets/flowers/small/9f70f2f1-7472-46d0-a26c-1e6a1767a44e.jpeg";
+import smallFlower09 from "./assets/flowers/small/635554028_3249230258584897_8078491129720463944_n.jpg";
+import smallFlower10 from "./assets/flowers/small/633658773_3249230288584894_5845819109626465371_n.jpg";
+import mediumFlower01 from "./assets/flowers/medium/dc09f4b9-6b70-4197-aa84-83fba89e1e62.jpeg";
 import mediumFlower02 from "./assets/flowers/medium/95ed1fd7-9543-4146-bb72-5edfa68c19c3.jpeg";
-import mediumFlower03 from "./assets/flowers/medium/CLAUDE.jpeg";
-import mediumFlower04 from "./assets/flowers/medium/dc09f4b9-6b70-4197-aa84-83fba89e1e62.jpeg";
+import mediumFlower03 from "./assets/flowers/medium/4113373e-09ed-40e8-9a60-790b36e30270.jpeg";
+import mediumFlower04 from "./assets/flowers/medium/CLAUDE.jpeg";
+import mediumFlower05 from "./assets/flowers/medium/9a146e4a-85aa-4348-a679-a4439439c873.jpeg";
 
 type ImageSource = string | StaticImageData;
 
@@ -59,6 +60,7 @@ const mediumFlowerAssets = [
   mediumFlower02,
   mediumFlower03,
   mediumFlower04,
+  mediumFlower05,
 ];
 
 const flowerImages = (ids: number[]) => ids.map((id) => flowerSrc(id));
@@ -77,7 +79,7 @@ const flowerSections = [
   {
     title: "Medium",
     description: "Balanced handheld bouquets with fuller wrapping and flower details.",
-    images: [...flowerImages([4, 8]), ...mediumFlowerAssets],
+    images: mediumFlowerAssets,
   },
   {
     title: "Large",
