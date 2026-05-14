@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { FormEvent } from "react";
 import { apiRequest, toFormData } from "@/src/lib/api";
 import type {
@@ -36,6 +36,8 @@ import { CategoryForm, FlowerForm, TestimonialForm } from "./components/AdminFor
 import { DashboardHeader } from "./components/DashboardHeader";
 import { FeaturedSummary } from "./components/FeaturedSummary";
 import { LoginScreen } from "./components/LoginScreen";
+import { AdminToast } from "./components/AdminToast";
+import type { AdminToastMessage } from "./components/AdminToast";
 
 type LoginResponse = {
   success: true;
@@ -134,8 +136,10 @@ export default function AdminPage() {
   const [customers, setCustomers] = useState<Testimonial[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
+  const [toast, setToast] = useState<AdminToastMessage | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasLoadedDashboard, setHasLoadedDashboard] = useState(false);
+  const toastTimeoutRef = useRef<number | null>(null);
 
   const stats = useMemo(
     () => [
@@ -178,6 +182,29 @@ export default function AdminPage() {
     }
   }, [rememberedLoginSnapshot]);
 
+  const dismissToast = useCallback(() => {
+    if (toastTimeoutRef.current) {
+      window.clearTimeout(toastTimeoutRef.current);
+      toastTimeoutRef.current = null;
+    }
+    setToast(null);
+  }, []);
+
+  const showToast = useCallback(
+    (title: string, tone: AdminToastMessage["tone"] = "success", description?: string) => {
+      if (toastTimeoutRef.current) {
+        window.clearTimeout(toastTimeoutRef.current);
+      }
+
+      setToast({ id: Date.now(), title, description, tone });
+      toastTimeoutRef.current = window.setTimeout(() => {
+        setToast(null);
+        toastTimeoutRef.current = null;
+      }, 4200);
+    },
+    [],
+  );
+
   const refreshData = useCallback(async (authToken: string) => {
     if (!authToken) return;
 
@@ -201,12 +228,18 @@ export default function AdminPage() {
       setFlowers(flowerList.data.flowers);
       setCustomers(testimonialList.data.testimonials);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Could not load dashboard data");
+      showToast(
+        "Could not load dashboard",
+        "error",
+        error instanceof Error ? error.message : "Please try again.",
+      );
     } finally {
       setHasLoadedDashboard(true);
       setIsLoading(false);
     }
-  }, []);
+  }, [showToast]);
+
+  useEffect(() => dismissToast, [dismissToast]);
 
   useEffect(() => {
     if (!token) return;
@@ -249,7 +282,7 @@ export default function AdminPage() {
       notifyTokenChange();
       setUser(response.data.user);
       setHasLoadedDashboard(false);
-      setMessage("Welcome back to Bloomistry.");
+      showToast("Welcome back to Bloomistry");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Login failed");
     } finally {
@@ -266,15 +299,18 @@ export default function AdminPage() {
     if (!token) return false;
 
     setIsLoading(true);
-    setMessage("");
     try {
       await apiRequest(path, { method, body, token });
-      setMessage(successMessage);
+      showToast(successMessage);
       setEditingId(null);
       await refreshData(token);
       return true;
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Save failed");
+      showToast(
+        "Save failed",
+        "error",
+        error instanceof Error ? error.message : "Please check the details and try again.",
+      );
       return false;
     } finally {
       setIsLoading(false);
@@ -294,7 +330,7 @@ export default function AdminPage() {
         priceLabel: formatPriceLabel(form.get("startPrice"), form.get("lastPrice")),
         isActive: form.get("isActive") === "on",
       }),
-      "Category saved",
+      editingId ? "Category updated" : "Category added",
       editingId ? "PATCH" : "POST",
     );
     if (didSave && formElement.isConnected) {
@@ -322,7 +358,7 @@ export default function AdminPage() {
         },
         image instanceof File && image.size > 0 ? image : null,
       ),
-      "Flower saved",
+      editingId ? "Flower updated" : "Flower added",
       editingId ? "PATCH" : "POST",
     );
     if (didSave && formElement.isConnected) {
@@ -347,7 +383,7 @@ export default function AdminPage() {
         },
         image instanceof File && image.size > 0 ? image : null,
       ),
-      "Customer saved",
+      editingId ? "Satisfied customer updated" : "Satisfied customer added",
       editingId ? "PATCH" : "POST",
     );
     if (didSave && formElement.isConnected) {
@@ -359,13 +395,21 @@ export default function AdminPage() {
     if (!token) return;
 
     setIsLoading(true);
-    setMessage("");
     try {
       await apiRequest(`/${section}/${id}`, { method: "DELETE", token });
-      setMessage("Item deleted");
+      const labels: Record<Exclude<Section, "featured">, string> = {
+        flowers: "Flower deleted",
+        categories: "Category deleted",
+        customers: "Satisfied customer deleted",
+      };
+      showToast(labels[section]);
       await refreshData(token);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Delete failed");
+      showToast(
+        "Delete failed",
+        "error",
+        error instanceof Error ? error.message : "Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -375,7 +419,6 @@ export default function AdminPage() {
     if (!token) return;
 
     setIsLoading(true);
-    setMessage("");
     try {
       const updates = flowers
         .filter((flower) => flower.isFeatured && flower._id !== selectedFlower._id)
@@ -396,10 +439,14 @@ export default function AdminPage() {
       );
 
       await Promise.all(updates);
-      setMessage(`${selectedFlower.name} is now featured`);
+      showToast("Featured flower updated", "success", `${selectedFlower.name} is now featured.`);
       await refreshData(token);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Could not update featured flower");
+      showToast(
+        "Could not update featured flower",
+        "error",
+        error instanceof Error ? error.message : "Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -409,17 +456,24 @@ export default function AdminPage() {
     if (!token) return;
 
     setIsLoading(true);
-    setMessage("");
     try {
       await apiRequest(`/flowers/${selectedFlower._id}`, {
         method: "PATCH",
         body: JSON.stringify({ isFeatured: false }),
         token,
       });
-      setMessage(`${selectedFlower.name} removed from featured`);
+      showToast(
+        "Featured flower removed",
+        "success",
+        `${selectedFlower.name} is no longer featured.`,
+      );
       await refreshData(token);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Could not update featured flower");
+      showToast(
+        "Could not update featured flower",
+        "error",
+        error instanceof Error ? error.message : "Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -462,12 +516,6 @@ export default function AdminPage() {
 
       <section className="min-w-0 px-4 py-5 sm:px-6 lg:px-10 lg:py-6">
         <DashboardHeader title={activeSectionLabel} stats={stats} />
-
-        {message ? (
-          <p className="mt-5 border border-[#d9c385]/55 bg-[#fffdf7] px-4 py-3 text-sm font-semibold text-[#a98739]">
-            {message}
-          </p>
-        ) : null}
 
         {isDashboardBooting ? (
           <AdminDashboardLoading />
@@ -556,6 +604,7 @@ export default function AdminPage() {
         )}
       </section>
 
+      <AdminToast toast={toast} onDismiss={dismissToast} />
       {isLoading && hasLoadedDashboard ? <AdminLoadingOverlay label="Updating" /> : null}
     </main>
   );
