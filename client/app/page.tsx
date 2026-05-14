@@ -5,12 +5,12 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 function getApiBaseUrl() {
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL;
-  }
-
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}/api/v1`;
+  }
+
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
   }
 
   return "http://localhost:5000/api/v1";

@@ -1,4 +1,22 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api/v1";
+const configuredApiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api/v1";
+
+function isLocalApiUrl(url: string) {
+  return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/api\/v1\/?$/i.test(url);
+}
+
+function getApiBaseUrl() {
+  if (typeof window === "undefined") {
+    return configuredApiBaseUrl;
+  }
+
+  const isLocalPage = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+  if (!isLocalPage && isLocalApiUrl(configuredApiBaseUrl)) {
+    return "/api/v1";
+  }
+
+  return configuredApiBaseUrl;
+}
 
 type RequestOptions = RequestInit & {
   token?: string | null;
@@ -15,7 +33,8 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     headers.set("Authorization", `Bearer ${options.token}`);
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const apiBaseUrl = getApiBaseUrl();
+  const response = await fetch(`${apiBaseUrl}${path}`, {
     ...options,
     headers,
     credentials: "include",
@@ -40,11 +59,13 @@ export function getApiAssetUrl(path?: string) {
     return path;
   }
 
-  if (API_BASE_URL.startsWith("/")) {
+  const apiBaseUrl = getApiBaseUrl();
+
+  if (apiBaseUrl.startsWith("/")) {
     return path.startsWith("/") ? path : `/${path}`;
   }
 
-  const apiOrigin = new URL(API_BASE_URL).origin;
+  const apiOrigin = new URL(apiBaseUrl).origin;
   return `${apiOrigin}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
