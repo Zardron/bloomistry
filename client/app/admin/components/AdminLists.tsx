@@ -38,7 +38,7 @@ export function ListHeader({
           <div
             role="tablist"
             aria-label="Flower categories"
-            className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:px-0 sm:pb-0 xl:flex xl:flex-wrap"
+            className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:flex xl:flex-wrap"
           >
             {categories.map((category) => {
               const isActive = activeFlowerCategory?.slug === category.slug;
@@ -53,7 +53,7 @@ export function ListHeader({
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => onCategoryChange(category.slug)}
-                  className={`min-h-10 shrink-0 border px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] transition sm:tracking-[0.1em] ${
+                  className={`min-h-10 min-w-0 border px-2 py-2 text-[0.68rem] font-bold uppercase leading-tight tracking-[0.06em] transition sm:px-4 sm:text-xs sm:tracking-[0.1em] xl:shrink-0 ${
                     isActive
                       ? "border-[#77669d] bg-[#77669d] text-white"
                       : "border-[#dfd2ea] bg-white text-[#67558a] hover:bg-[#f4eefb]"

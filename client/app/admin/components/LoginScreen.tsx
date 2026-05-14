@@ -4,10 +4,16 @@ import Image from "next/image";
 import type { FormEvent } from "react";
 
 export function LoginScreen({
+  rememberedLogin,
   isLoading,
   message,
   onSubmit,
 }: {
+  rememberedLogin: {
+    email: string;
+    password: string;
+    remember: boolean;
+  };
   isLoading: boolean;
   message: string;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -43,6 +49,7 @@ export function LoginScreen({
           </p>
         </div>
         <form
+          key={`${rememberedLogin.email}:${rememberedLogin.password}:${rememberedLogin.remember}`}
           onSubmit={onSubmit}
           className="border border-[#d9c385]/60 bg-white p-5 shadow-xl shadow-[#77669d]/10 sm:p-6"
         >
@@ -53,6 +60,7 @@ export function LoginScreen({
               name="email"
               type="email"
               required
+              defaultValue={rememberedLogin.email}
               className="mt-2 min-h-12 w-full border border-[#dfd2ea] px-4 py-3 text-base outline-none focus:border-[#77669d]"
             />
           </label>
@@ -63,8 +71,18 @@ export function LoginScreen({
               type="password"
               required
               minLength={8}
+              defaultValue={rememberedLogin.password}
               className="mt-2 min-h-12 w-full border border-[#dfd2ea] px-4 py-3 text-base outline-none focus:border-[#77669d]"
             />
+          </label>
+          <label className="mt-4 flex items-center gap-3 text-sm font-semibold text-[#5d5364]">
+            <input
+              name="rememberMe"
+              type="checkbox"
+              defaultChecked={rememberedLogin.remember}
+              className="h-4 w-4 accent-[#77669d]"
+            />
+            Remember me
           </label>
           <button
             type="submit"

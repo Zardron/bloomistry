@@ -1,6 +1,7 @@
 import type { Section } from "./adminTypes";
 
 export const adminTokenKey = "bloomistry_admin_token";
+export const rememberedAdminLoginKey = "bloomistry_admin_remembered_login";
 
 export const adminSections: Array<{ key: Section; label: string }> = [
   { key: "flowers", label: "Flowers" },

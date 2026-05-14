@@ -11,13 +11,17 @@ import type {
   Testimonial,
   User,
 } from "@/src/types/api";
-import { adminSections, adminTokenKey } from "./adminConfig";
+import { adminSections, adminTokenKey, rememberedAdminLoginKey } from "./adminConfig";
 import type { Section } from "./adminTypes";
 import {
   getFlowerCategorySlug,
+  getServerRememberedLoginSnapshot,
   getServerTokenSnapshot,
+  getStoredRememberedLoginSnapshot,
   getStoredToken,
+  notifyRememberedLoginChange,
   notifyTokenChange,
+  subscribeToRememberedLoginChange,
   subscribeToTokenChange,
 } from "./adminUtils";
 import { AdminSidebar } from "./components/AdminSidebar";
@@ -41,11 +45,22 @@ type LoginResponse = {
   };
 };
 
+type RememberedAdminLogin = {
+  email: string;
+  password: string;
+  remember: boolean;
+};
+
 export default function AdminPage() {
   const token = useSyncExternalStore(
     subscribeToTokenChange,
     getStoredToken,
     getServerTokenSnapshot,
+  );
+  const rememberedLoginSnapshot = useSyncExternalStore(
+    subscribeToRememberedLoginChange,
+    getStoredRememberedLoginSnapshot,
+    getServerRememberedLoginSnapshot,
   );
   const [user, setUser] = useState<User | null>(null);
   const [activeSection, setActiveSection] = useState<Section>("flowers");
@@ -76,6 +91,26 @@ export default function AdminPage() {
     ? flowers.filter((flower) => getFlowerCategorySlug(flower) === activeFlowerCategory.slug)
     : flowers;
   const featuredFlowers = flowers.filter((flower) => flower.isFeatured);
+  const rememberedLogin = useMemo<RememberedAdminLogin>(() => {
+    if (!rememberedLoginSnapshot) {
+      return { email: "", password: "", remember: false };
+    }
+
+    try {
+      const parsedLogin = JSON.parse(rememberedLoginSnapshot) as Partial<RememberedAdminLogin>;
+      if (typeof parsedLogin.email !== "string" || typeof parsedLogin.password !== "string") {
+        return { email: "", password: "", remember: false };
+      }
+
+      return {
+        email: parsedLogin.email,
+        password: parsedLogin.password,
+        remember: true,
+      };
+    } catch {
+      return { email: "", password: "", remember: false };
+    }
+  }, [rememberedLoginSnapshot]);
 
   const refreshData = useCallback(async (authToken: string) => {
     if (!authToken) return;
@@ -118,6 +153,9 @@ export default function AdminPage() {
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    const email = String(form.get("email") ?? "");
+    const password = String(form.get("password") ?? "");
+    const shouldRemember = form.get("rememberMe") === "on";
 
     setIsLoading(true);
     setMessage("");
@@ -125,10 +163,20 @@ export default function AdminPage() {
       const response = await apiRequest<LoginResponse>("/auth/login", {
         method: "POST",
         body: JSON.stringify({
-          email: form.get("email"),
-          password: form.get("password"),
+          email,
+          password,
         }),
       });
+
+      if (shouldRemember) {
+        window.localStorage.setItem(
+          rememberedAdminLoginKey,
+          JSON.stringify({ email, password }),
+        );
+      } else {
+        window.localStorage.removeItem(rememberedAdminLoginKey);
+      }
+      notifyRememberedLoginChange();
 
       window.localStorage.setItem(adminTokenKey, response.data.token);
       notifyTokenChange();
@@ -322,7 +370,14 @@ export default function AdminPage() {
   }
 
   if (!token) {
-    return <LoginScreen isLoading={isLoading} message={message} onSubmit={handleLogin} />;
+    return (
+      <LoginScreen
+        rememberedLogin={rememberedLogin}
+        isLoading={isLoading}
+        message={message}
+        onSubmit={handleLogin}
+      />
+    );
   }
 
   return (
