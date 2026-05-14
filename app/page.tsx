@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import featuredFlower from "./assets/flowers/vercel.jpeg";
 
 type GalleryItem = {
   src: string;
@@ -84,7 +85,7 @@ export default function Home() {
     productTabs.find((tab) => tab.title === activeTabTitle) ?? productTabs[0];
 
   const featured = {
-    src: flowerSrc(2),
+    src: featuredFlower,
     alt: "Featured sunflower bouquet with white daisies and cream gold wrapping",
     title: "Featured Sunflower Bouquet",
   };
