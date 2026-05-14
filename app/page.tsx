@@ -14,11 +14,45 @@ import smallFlower07 from "./assets/flowers/small/2d0cf1de-57d8-4a2a-b120-aaa71b
 import smallFlower08 from "./assets/flowers/small/9f70f2f1-7472-46d0-a26c-1e6a1767a44e.jpeg";
 import smallFlower09 from "./assets/flowers/small/635554028_3249230258584897_8078491129720463944_n.jpg";
 import smallFlower10 from "./assets/flowers/small/633658773_3249230288584894_5845819109626465371_n.jpg";
-import mediumFlower01 from "./assets/flowers/medium/dc09f4b9-6b70-4197-aa84-83fba89e1e62.jpeg";
-import mediumFlower02 from "./assets/flowers/medium/95ed1fd7-9543-4146-bb72-5edfa68c19c3.jpeg";
-import mediumFlower03 from "./assets/flowers/medium/4113373e-09ed-40e8-9a60-790b36e30270.jpeg";
-import mediumFlower04 from "./assets/flowers/medium/CLAUDE.jpeg";
-import mediumFlower05 from "./assets/flowers/medium/9a146e4a-85aa-4348-a679-a4439439c873.jpeg";
+import mediumFlower01 from "./assets/flowers/medium/bf546554-535e-49b8-9596-8dfd8f005fee.jpeg";
+import mediumFlower02 from "./assets/flowers/medium/9fc1a7b2-d858-4988-a990-993689557af7.jpeg";
+import mediumFlower03 from "./assets/flowers/medium/1f57afe9-c134-478c-ad37-62ae45d594f4.jpeg";
+import mediumFlower04 from "./assets/flowers/medium/eaecc951-5d3e-4707-93bc-16ed8c156fc6.jpeg";
+import mediumFlower05 from "./assets/flowers/medium/0d9bf6bc-b603-4d69-92f9-52c7281ad137.jpeg";
+import mediumFlower06 from "./assets/flowers/medium/4113373e-09ed-40e8-9a60-790b36e30270.jpeg";
+import mediumFlower07 from "./assets/flowers/medium/95ed1fd7-9543-4146-bb72-5edfa68c19c3.jpeg";
+import mediumFlower08 from "./assets/flowers/medium/dc09f4b9-6b70-4197-aa84-83fba89e1e62.jpeg";
+import mediumFlower09 from "./assets/flowers/medium/9a146e4a-85aa-4348-a679-a4439439c873.jpeg";
+import mediumFlower10 from "./assets/flowers/medium/abeff337-6354-4e9d-ae58-c8e9976c163d.jpeg";
+import mediumFlower11 from "./assets/flowers/medium/676e7630-9253-41d5-bc8e-304c38181be5.jpeg";
+import mediumFlower12 from "./assets/flowers/medium/8fb53d23-2ab4-4291-ac12-1264a0808b1b.jpeg";
+import mediumFlower13 from "./assets/flowers/medium/b0b06f53-b87f-46aa-9426-9e161da5570f.jpeg";
+import largeFlower01 from "./assets/flowers/large/bf15da70-6c7a-43ea-a696-1ba30343c5e2 (1).jpeg";
+import largeFlower02 from "./assets/flowers/large/813e3fe5-0913-4316-926a-154fb3eac4d6 (1).jpeg";
+import largeFlower03 from "./assets/flowers/large/4097c56a-8e04-4b64-8d0d-a8a6c9e546bb (1).jpeg";
+import largeFlower04 from "./assets/flowers/large/534da838-bcbe-4452-a5b3-8dd5890a8a3c (1).jpeg";
+import xlFlower01 from "./assets/flowers/xl/aca522e0-71be-461e-92ae-9db832e6c2cd.jpeg";
+import xlFlower02 from "./assets/flowers/xl/ab46e1f5-ce21-469f-8561-0429fe78c65c.jpeg";
+import xlFlower03 from "./assets/flowers/xl/fcc2afec-10a6-4f83-a2a3-07b7d5a53d2f.jpeg";
+import xlFlower04 from "./assets/flowers/xl/6dc3d02f-982b-49f5-a26e-35bed111b92a.jpeg";
+import xlFlower05 from "./assets/flowers/xl/197d874d-3c57-4d76-aced-46ba78574dda.jpeg";
+import xlFlower06 from "./assets/flowers/xl/72adcff6-75ba-4b0c-9ca0-b6ce35e4e19f.jpeg";
+import xlFlower07 from "./assets/flowers/xl/76bffc3c-3d41-49c0-b1f4-1eb01adef733.jpeg";
+import customFlower01 from "./assets/flowers/custom/1b8f4008-5274-4880-bed2-678731cbed1c.jpeg";
+import customFlower02 from "./assets/flowers/custom/a315ac6b-827f-4209-b730-f0ae6f6599b6.jpeg";
+import customFlower03 from "./assets/flowers/custom/d661edab-3c6e-4f3b-9095-dbeb1b6a081e.jpeg";
+import customFlower04 from "./assets/flowers/custom/e13736cc-5aec-486f-9590-f77de499bb93.jpeg";
+import customFlower05 from "./assets/flowers/custom/1e44a08a-e649-4830-ad02-4a2bbcceb158.jpeg";
+import customFlower06 from "./assets/flowers/custom/23604c95-4ca9-41d6-ad92-5cc9eef89177.jpeg";
+import customFlower07 from "./assets/flowers/custom/4e7d9f8c-4840-4dc1-ab8a-665447825171.jpeg";
+import customFlower08 from "./assets/flowers/custom/d9494130-7250-49ec-8425-1aa9552a6ac9.jpeg";
+import customFlower09 from "./assets/flowers/custom/1cdc9ed9-3606-4c00-be1a-14e1d7261b10.jpeg";
+import graduationFlower01 from "./assets/flowers/graduation/4b9b9ff2-cfcb-435c-a527-7cc1658e19f2.jpeg";
+import graduationFlower02 from "./assets/flowers/graduation/0f07d539-89b4-41db-9db0-53e1449f11dd.jpeg";
+import graduationFlower03 from "./assets/flowers/graduation/4f0a665a-d127-4e18-adce-fc339da6b494.jpeg";
+import graduationFlower04 from "./assets/flowers/graduation/29b64052-d421-4538-85e0-8eca2693788e.jpeg";
+import graduationFlower05 from "./assets/flowers/graduation/ee1f7176-95a4-4132-8c24-0f89fe89a7aa.jpeg";
+import graduationFlower06 from "./assets/flowers/graduation/6995be02-b174-4d15-bea4-02d1810f412d.jpeg";
 
 type ImageSource = string | StaticImageData;
 
@@ -34,13 +68,6 @@ type LightboxState = {
   items: GalleryItem[];
   index: number;
 } | null;
-
-const jpegIds = new Set([1, 2, 3, 4, 47, 55, 56, 57, 58, 59]);
-
-const flowerSrc = (id: number) =>
-  `/gallery/flowers/flower-${String(id).padStart(2, "0")}.${
-    jpegIds.has(id) ? "jpeg" : "jpg"
-  }`;
 
 const smallFlowerAssets = [
   smallFlower01,
@@ -61,16 +88,55 @@ const mediumFlowerAssets = [
   mediumFlower03,
   mediumFlower04,
   mediumFlower05,
+  mediumFlower06,
+  mediumFlower07,
+  mediumFlower08,
+  mediumFlower09,
+  mediumFlower10,
+  mediumFlower11,
+  mediumFlower12,
+  mediumFlower13,
 ];
 
-const flowerImages = (ids: number[]) => ids.map((id) => flowerSrc(id));
+const largeFlowerAssets = [
+  largeFlower01,
+  largeFlower02,
+  largeFlower03,
+  largeFlower04,
+];
+
+const xlFlowerAssets = [
+  xlFlower01,
+  xlFlower02,
+  xlFlower03,
+  xlFlower04,
+  xlFlower05,
+  xlFlower06,
+  xlFlower07,
+];
+
+const customFlowerAssets = [
+  customFlower01,
+  customFlower02,
+  customFlower03,
+  customFlower04,
+  customFlower05,
+  customFlower06,
+  customFlower07,
+  customFlower08,
+  customFlower09,
+];
+
+const graduationFlowerAssets = [
+  graduationFlower01,
+  graduationFlower02,
+  graduationFlower03,
+  graduationFlower04,
+  graduationFlower05,
+  graduationFlower06,
+];
 
 const flowerSections = [
-  {
-    title: "Custom",
-    description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
-    images: flowerImages([28, 30, 31, 32, 33, 35, 37, 38]),
-  },
   {
     title: "Small",
     description: "Compact bouquets and mini flower arrangements for simple gifts.",
@@ -84,33 +150,32 @@ const flowerSections = [
   {
     title: "Large",
     description: "Statement bouquets with bigger blooms, layered wrapping, and fuller presentation.",
-    images: flowerImages([1, 2, 3, 47, 55, 56, 57, 58, 59]),
+    images: largeFlowerAssets,
+  },
+  {
+    title: "XL",
+    description: "Extra-full bouquets made for bigger, more dramatic gifting moments.",
+    images: xlFlowerAssets,
+  },
+  {
+    title: "Custom",
+    description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
+    images: customFlowerAssets,
+  },
+  {
+    title: "Graduation",
+    description: "Graduation-ready bouquets for ceremonies, photos, and congratulatory gifts.",
+    images: graduationFlowerAssets,
   },
 ];
 
-const hairPinIds = [13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 39, 40, 41, 42, 43, 44, 45];
-const keychainIds = [29, 46, 48];
 const flowerCount = flowerSections.reduce((total, section) => total + section.images.length, 0);
-const allItemsCount = flowerCount + hairPinIds.length + keychainIds.length;
+const allItemsCount = flowerCount;
 
-const productTabs = [
-  ...flowerSections.map((section) => ({
-    ...section,
-    label: `${section.title} Flower`,
-  })),
-  {
-    title: "Hair Clips",
-    description: "Colorful fuzzy wire flower and bow hair clips in singles, pairs, and packaged sets.",
-    images: flowerImages(hairPinIds),
-    label: "Hair Clip",
-  },
-  {
-    title: "Keychains",
-    description: "Small fuzzy wire keepsakes made as keychains and hanging accessories.",
-    images: flowerImages(keychainIds),
-    label: "Keychain",
-  },
-];
+const productTabs = flowerSections.map((section) => ({
+  ...section,
+  label: `${section.title} Flower`,
+}));
 
 const customerIds = Array.from({ length: 13 }, (_, index) => index + 1);
 
@@ -399,9 +464,8 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-lg text-base leading-7 text-[#625a67]">
-              Browse {allItemsCount} unique product photos by tab: custom,
-              small, medium, large, hair clips, and keychains. Exact duplicate
-              photos are skipped.
+              Browse {allItemsCount} unique flower photos by tab: small,
+              medium, large, XL, custom, and graduation.
             </p>
           </div>
 
