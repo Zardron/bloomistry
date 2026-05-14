@@ -138,6 +138,16 @@ const graduationFlowerAssets = [
 
 const flowerSections = [
   {
+    title: "Custom",
+    description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
+    images: customFlowerAssets,
+  },
+  {
+    title: "Graduation",
+    description: "Graduation-ready bouquets for ceremonies, photos, and congratulatory gifts.",
+    images: graduationFlowerAssets,
+  },
+  {
     title: "Small",
     description: "Compact bouquets and mini flower arrangements for simple gifts.",
     images: smallFlowerAssets,
@@ -156,16 +166,6 @@ const flowerSections = [
     title: "XL",
     description: "Extra-full bouquets made for bigger, more dramatic gifting moments.",
     images: xlFlowerAssets,
-  },
-  {
-    title: "Custom",
-    description: "Reference-inspired bouquets, money bouquets, chocolate wraps, and character-themed pieces.",
-    images: customFlowerAssets,
-  },
-  {
-    title: "Graduation",
-    description: "Graduation-ready bouquets for ceremonies, photos, and congratulatory gifts.",
-    images: graduationFlowerAssets,
   },
 ];
 
@@ -464,8 +464,8 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-lg text-base leading-7 text-[#625a67]">
-              Browse {allItemsCount} unique flower photos by tab: small,
-              medium, large, XL, custom, and graduation.
+              Browse {allItemsCount} unique flower photos by tab: custom,
+              graduation, small, medium, large, and XL.
             </p>
           </div>
 
