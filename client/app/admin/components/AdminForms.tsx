@@ -35,27 +35,47 @@ export function CategoryForm({
       </h2>
       <TextInput name="name" label="Name" defaultValue={category?.name} required />
       <TextArea name="description" label="Description" defaultValue={category?.description} />
-      <div className="grid gap-3 sm:grid-cols-2">
-        <TextInput
-          name="startPrice"
-          label="Start price"
-          type="number"
-          min={0}
-          step={1}
-          placeholder="120"
-          defaultValue={startPrice}
-          required
-        />
-        <TextInput
-          name="lastPrice"
-          label="Last price"
-          type="number"
-          min={0}
-          step={1}
-          placeholder="300"
-          defaultValue={lastPrice}
-          required
-        />
+      <div>
+        <p className="text-sm font-semibold text-[#5d5364]">Price label</p>
+        <div className="mt-2 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-2">
+          <label className="block text-xs font-semibold text-[#5d5364]">
+            Start price
+            <span className="relative mt-2 block">
+              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-[#a98739]">
+                PHP
+              </span>
+              <input
+                name="startPrice"
+                type="number"
+                min={0}
+                step={1}
+                placeholder="120"
+                defaultValue={startPrice}
+                required
+                className="min-h-12 w-full border border-[#dfd2ea] px-4 py-3 pl-12 text-base outline-none focus:border-[#77669d]"
+              />
+            </span>
+          </label>
+          <span className="pb-3 text-lg font-bold text-[#67558a]">-</span>
+          <label className="block text-xs font-semibold text-[#5d5364]">
+            Last price
+            <span className="relative mt-2 block">
+              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-[#a98739]">
+                PHP
+              </span>
+              <input
+                name="lastPrice"
+                type="number"
+                min={0}
+                step={1}
+                placeholder="300"
+                defaultValue={lastPrice}
+                required
+                className="min-h-12 w-full border border-[#dfd2ea] px-4 py-3 pl-12 text-base outline-none focus:border-[#77669d]"
+              />
+            </span>
+          </label>
+        </div>
       </div>
       <Checkbox name="isActive" label="Visible on site" defaultChecked={category?.isActive ?? true} />
       <FormActions isLoading={isLoading} isEditing={Boolean(category)} onCancel={onCancel} />
