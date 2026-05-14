@@ -4,18 +4,16 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
 import featuredFlower from "./assets/flowers/vercel.jpeg";
-import smallFlower01 from "./assets/flowers/small/48126d4d-a1f1-4c1b-9ca7-27b5755e2d46.jpeg";
-import smallFlower02 from "./assets/flowers/small/5859b116-f37a-42e7-8156-c63249c64b64.jpeg";
-import smallFlower03 from "./assets/flowers/small/6ebfd240-3152-438c-aa1f-7a1fb3636ba3.jpeg";
-import smallFlower04 from "./assets/flowers/small/70f23b83-e60b-4313-9b78-bc8619f3ee1c.jpeg";
-import smallFlower05 from "./assets/flowers/small/74496c4d-f615-4972-8ef1-0d3b5bb5b7b1.jpeg";
-import smallFlower06 from "./assets/flowers/small/853764c2-15a9-4afa-b7a1-2de9afbce674.jpeg";
-import smallFlower07 from "./assets/flowers/small/94f14a12-aac5-49c6-9704-dfd804ad7b04.jpeg";
-import smallFlower08 from "./assets/flowers/small/af356849-00a1-42b4-a3f3-429f3ec31005.jpeg";
-import mediumFlower01 from "./assets/flowers/medium/4113373e-09ed-40e8-9a60-790b36e30270.jpeg";
-import mediumFlower02 from "./assets/flowers/medium/95ed1fd7-9543-4146-bb72-5edfa68c19c3.jpeg";
-import mediumFlower03 from "./assets/flowers/medium/CLAUDE.jpeg";
-import mediumFlower04 from "./assets/flowers/medium/dc09f4b9-6b70-4197-aa84-83fba89e1e62.jpeg";
+import smallFlower01 from "./assets/flowers/small/2d0cf1de-57d8-4a2a-b120-aaa71b4b7911.jpeg";
+import smallFlower02 from "./assets/flowers/small/9f70f2f1-7472-46d0-a26c-1e6a1767a44e.jpeg";
+import smallFlower03 from "./assets/flowers/small/633658773_3249230288584894_5845819109626465371_n.jpg";
+import smallFlower04 from "./assets/flowers/small/6edf65b9-35d8-4f6a-9470-dfc0319c958d.jpeg";
+import smallFlower05 from "./assets/flowers/small/635554028_3249230258584897_8078491129720463944_n.jpg";
+import smallFlower06 from "./assets/flowers/small/81210d07-ae10-433f-a16d-776244b210aa.jpeg";
+import smallFlower07 from "./assets/flowers/small/6107ea80-823c-4233-816e-8235c8254d82.jpeg";
+import smallFlower08 from "./assets/flowers/small/45b39846-3c3d-4f84-893e-5356e43a7806.jpeg";
+import smallFlower09 from "./assets/flowers/small/d295c29b-6b00-4b2f-998d-353fbbad6a0b.jpeg";
+import smallFlower10 from "./assets/flowers/small/48166219-aa68-4332-a04b-7f5450a654bd.jpeg";
 
 type ImageSource = string | StaticImageData;
 
@@ -48,13 +46,8 @@ const smallFlowerAssets = [
   smallFlower06,
   smallFlower07,
   smallFlower08,
-];
-
-const mediumFlowerAssets = [
-  mediumFlower01,
-  mediumFlower02,
-  mediumFlower03,
-  mediumFlower04,
+  smallFlower09,
+  smallFlower10,
 ];
 
 const flowerImages = (ids: number[]) => ids.map((id) => flowerSrc(id));
@@ -68,12 +61,7 @@ const flowerSections = [
   {
     title: "Small",
     description: "Compact bouquets and mini flower arrangements for simple gifts.",
-    images: [...flowerImages([6, 9]), ...smallFlowerAssets],
-  },
-  {
-    title: "Medium",
-    description: "Balanced handheld bouquets with fuller wrapping and flower details.",
-    images: [...flowerImages([4, 8]), ...mediumFlowerAssets],
+    images: smallFlowerAssets,
   },
   {
     title: "Large",
@@ -394,8 +382,8 @@ export default function Home() {
             </div>
             <p className="max-w-lg text-base leading-7 text-[#625a67]">
               Browse {allItemsCount} unique product photos by tab: custom,
-              small, medium, large, hair clips, and keychains. Exact duplicate
-              photos are skipped.
+              small, large, hair clips, and keychains. Exact duplicate photos
+              are skipped.
             </p>
           </div>
 
