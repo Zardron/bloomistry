@@ -14,6 +14,10 @@ import smallFlower07 from "./assets/flowers/small/6107ea80-823c-4233-816e-8235c8
 import smallFlower08 from "./assets/flowers/small/45b39846-3c3d-4f84-893e-5356e43a7806.jpeg";
 import smallFlower09 from "./assets/flowers/small/d295c29b-6b00-4b2f-998d-353fbbad6a0b.jpeg";
 import smallFlower10 from "./assets/flowers/small/48166219-aa68-4332-a04b-7f5450a654bd.jpeg";
+import mediumFlower01 from "./assets/flowers/medium/4113373e-09ed-40e8-9a60-790b36e30270.jpeg";
+import mediumFlower02 from "./assets/flowers/medium/95ed1fd7-9543-4146-bb72-5edfa68c19c3.jpeg";
+import mediumFlower03 from "./assets/flowers/medium/CLAUDE.jpeg";
+import mediumFlower04 from "./assets/flowers/medium/dc09f4b9-6b70-4197-aa84-83fba89e1e62.jpeg";
 
 type ImageSource = string | StaticImageData;
 
@@ -50,6 +54,13 @@ const smallFlowerAssets = [
   smallFlower10,
 ];
 
+const mediumFlowerAssets = [
+  mediumFlower01,
+  mediumFlower02,
+  mediumFlower03,
+  mediumFlower04,
+];
+
 const flowerImages = (ids: number[]) => ids.map((id) => flowerSrc(id));
 
 const flowerSections = [
@@ -62,6 +73,11 @@ const flowerSections = [
     title: "Small",
     description: "Compact bouquets and mini flower arrangements for simple gifts.",
     images: smallFlowerAssets,
+  },
+  {
+    title: "Medium",
+    description: "Balanced handheld bouquets with fuller wrapping and flower details.",
+    images: [...flowerImages([4, 8]), ...mediumFlowerAssets],
   },
   {
     title: "Large",
@@ -382,8 +398,8 @@ export default function Home() {
             </div>
             <p className="max-w-lg text-base leading-7 text-[#625a67]">
               Browse {allItemsCount} unique product photos by tab: custom,
-              small, large, hair clips, and keychains. Exact duplicate photos
-              are skipped.
+              small, medium, large, hair clips, and keychains. Exact duplicate
+              photos are skipped.
             </p>
           </div>
 
