@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bloomistry Website
 
-## Getting Started
+Production-oriented full-stack Bloomistry architecture using a split workspace:
 
-First, run the development server:
+- `client/` - Next.js App Router frontend and admin panel
+- `server/` - Node.js ES Modules API with Express, MongoDB, JWT auth, validation, uploads, and layered modules
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp client/.env.example client/.env.local
+cp server/.env.example server/.env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Update `server/.env` with a MongoDB connection string and a long `JWT_SECRET`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev:client
+npm run dev:server
+```
 
-## Learn More
+Or run both:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev:full
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Frontend: `http://localhost:3000`
+API: `http://localhost:5000/api/v1`
+Admin panel: `http://localhost:3000/admin`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Admin User
 
-## Deploy on Vercel
+Create the first admin after configuring MongoDB:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run seed:admin --workspace server
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API Structure
+
+Core endpoints:
+
+- `POST /api/v1/auth/login`
+- `GET /api/v1/auth/me`
+- `POST /api/v1/auth/logout`
+- `GET /api/v1/flowers`
+- `POST /api/v1/flowers`
+- `PATCH /api/v1/flowers/:id`
+- `DELETE /api/v1/flowers/:id`
+- `GET /api/v1/categories`
+- `POST /api/v1/categories`
+- `PATCH /api/v1/categories/:id`
+- `DELETE /api/v1/categories/:id`
+- `GET /api/v1/testimonials`
+- `POST /api/v1/testimonials`
+- `PATCH /api/v1/testimonials/:id`
+- `DELETE /api/v1/testimonials/:id`
+
+Protected write routes require an admin/editor JWT. Delete routes require `admin`.
