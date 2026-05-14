@@ -21,7 +21,7 @@ export function LoginScreen({
   return (
     <main className="min-h-dvh bg-[#fbf8ff] px-4 py-6 text-[#332b3d] sm:px-5 sm:py-10">
       <section className="mx-auto grid min-h-[calc(100dvh-3rem)] max-w-6xl items-center gap-8 lg:min-h-[calc(100dvh-5rem)] lg:grid-cols-[1fr_440px] lg:gap-10">
-        <div>
+        <div className="text-center lg:text-left">
           <div className="flex items-center justify-center gap-3 lg:justify-start">
             <Image
               src="/logo.jpeg"
@@ -40,10 +40,10 @@ export function LoginScreen({
               </p>
             </div>
           </div>
-          <h1 className="mt-4 max-w-2xl font-serif text-4xl leading-tight text-[#67558a] sm:text-7xl">
+          <h1 className="mx-auto mt-4 max-w-2xl font-serif text-4xl leading-tight text-[#67558a] sm:text-7xl lg:mx-0">
             Manage every bloom with care.
           </h1>
-          <p className="mt-4 max-w-xl text-base leading-7 text-[#625a67] sm:mt-5 sm:text-lg sm:leading-8">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-[#625a67] sm:mt-5 sm:text-lg sm:leading-8 lg:mx-0">
             A secure dashboard for catalog updates, customer moments, and category
             organization.
           </p>
@@ -53,7 +53,9 @@ export function LoginScreen({
           onSubmit={onSubmit}
           className="border border-[#d9c385]/60 bg-white p-5 shadow-xl shadow-[#77669d]/10 sm:p-6"
         >
-          <h2 className="font-serif text-3xl text-[#67558a]">Admin login</h2>
+          <h2 className="text-center font-serif text-3xl text-[#67558a] lg:text-left">
+            Admin login
+          </h2>
           <label className="mt-6 block text-sm font-semibold text-[#5d5364]">
             Email
             <input
