@@ -30,16 +30,25 @@ export const categoryService = {
   },
 
   async create(payload) {
+    const lastCategory = await categoryRepository
+      .find({}, "sortOrder")
+      .sort({ sortOrder: -1 })
+      .limit(1)
+      .then((categories) => categories[0]);
+
     return categoryRepository.create({
       ...payload,
       slug: payload.slug || slugify(payload.name),
+      sortOrder: lastCategory ? lastCategory.sortOrder + 10 : 10,
     });
   },
 
   async update(id, payload) {
+    const safePayload = { ...payload };
+    delete safePayload.sortOrder;
     const update = {
-      ...payload,
-      ...(payload.name && !payload.slug ? { slug: slugify(payload.name) } : {}),
+      ...safePayload,
+      ...(safePayload.name && !safePayload.slug ? { slug: slugify(safePayload.name) } : {}),
     };
     const category = await categoryRepository.updateById(id, update);
 

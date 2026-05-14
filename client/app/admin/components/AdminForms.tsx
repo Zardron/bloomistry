@@ -30,12 +30,6 @@ export function CategoryForm({
         placeholder="PHP 120 - PHP 300"
         defaultValue={category?.priceLabel}
       />
-      <TextInput
-        name="sortOrder"
-        label="Sort order"
-        type="number"
-        defaultValue={category?.sortOrder ?? 0}
-      />
       <Checkbox name="isActive" label="Visible on site" defaultChecked={category?.isActive ?? true} />
       <FormActions isLoading={isLoading} isEditing={Boolean(category)} onCancel={onCancel} />
     </form>

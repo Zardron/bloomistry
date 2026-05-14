@@ -281,7 +281,6 @@ export default function AdminPage() {
         name: form.get("name"),
         description: form.get("description"),
         priceLabel: form.get("priceLabel"),
-        sortOrder: form.get("sortOrder"),
         isActive: form.get("isActive") === "on",
       }),
       "Category saved",
