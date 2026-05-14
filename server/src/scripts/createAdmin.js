@@ -1,19 +1,55 @@
-import readline from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
 import { connectDatabase, disconnectDatabase } from "../config/database.js";
 import { User } from "../models/user.model.js";
 
-const rl = readline.createInterface({ input, output });
+const sharedAdminPassword = process.env.BLOOMISTRY_ADMIN_PASSWORD;
+
+if (!sharedAdminPassword) {
+  throw new Error("Set BLOOMISTRY_ADMIN_PASSWORD before running seed:admin.");
+}
+
+const adminAccounts = [
+  {
+    name: "Alaine",
+    email: "alaine@bloomistry.com",
+    password: sharedAdminPassword,
+  },
+  {
+    name: "Zardron",
+    email: "zardron@bloomistry.com",
+    password: sharedAdminPassword,
+  },
+];
+
+async function upsertAdmin({ name, email, password }) {
+  const normalizedEmail = email.trim().toLowerCase();
+  const existingUser = await User.findOne({ email: normalizedEmail }).select("+password");
+
+  if (existingUser) {
+    existingUser.name = name;
+    existingUser.password = password;
+    existingUser.role = "admin";
+    existingUser.isActive = true;
+    await existingUser.save();
+    return "updated";
+  }
+
+  await User.create({
+    name,
+    email: normalizedEmail,
+    password,
+    role: "admin",
+    isActive: true,
+  });
+  return "created";
+}
 
 async function main() {
   await connectDatabase();
 
-  const name = await rl.question("Admin name: ");
-  const email = (await rl.question("Admin email: ")).trim().toLowerCase();
-  const password = await rl.question("Admin password (min 8 chars): ");
-
-  await User.create({ name, email, password, role: "admin" });
-  console.info(`Admin created for ${email}`);
+  for (const account of adminAccounts) {
+    const result = await upsertAdmin(account);
+    console.info(`Admin ${result} for ${account.email}`);
+  }
 }
 
 main()
@@ -22,6 +58,5 @@ main()
     process.exitCode = 1;
   })
   .finally(async () => {
-    rl.close();
     await disconnectDatabase();
   });

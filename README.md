@@ -34,11 +34,15 @@ Admin panel: `http://localhost:3000/admin`
 
 ## Admin User
 
-Create the first admin after configuring MongoDB:
+Create or update the Bloomistry admin accounts after configuring MongoDB:
 
 ```bash
+BLOOMISTRY_ADMIN_PASSWORD="your-admin-password" \
 npm run seed:admin --workspace server
 ```
+
+The seed creates admin accounts for `alaine@bloomistry.com` and
+`zardron@bloomistry.com`.
 
 ## API Structure
 
