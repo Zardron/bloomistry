@@ -379,7 +379,7 @@ export default function HomeClient({
                 Bouquet range
               </p>
               <p className="mt-3 font-serif text-4xl text-[#67558a] sm:text-5xl">
-                50-500
+                50-700
               </p>
               <p className="mt-3 text-sm leading-6 text-[#625a67]">
                 Final pricing depends on bouquet size, flower count, wrapping,
